@@ -32,10 +32,10 @@ endif
 all: Clock_02_HH_display.elf
 
 # Tool invocations
-Clock_02_HH_display.elf: $(OBJS) $(USER_OBJS) C:\Users\DJPifPaf\workspace\Clock_02_HH_display/LinkerScript.ld
+Clock_02_HH_display.elf: $(OBJS) $(USER_OBJS) C:\Users\DJPifPaf\git\HDD_clock/LinkerScript.ld
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -T"C:/Users/DJPifPaf/workspace/Clock_02_HH_display/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Clock_02_HH_display.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -T"C:/Users/DJPifPaf/git/HDD_clock/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Clock_02_HH_display.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

@@ -4739,7 +4739,7 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_macro   0x000103cf       0x88 src/syscalls.o
  .debug_macro   0x00010457      0x19d src/system_stm32f10x.o
 
-.debug_line     0x00000000     0x57c3
+.debug_line     0x00000000     0x5791
  .debug_line    0x00000000      0x615 StdPeriph_Driver/src/misc.o
  .debug_line    0x00000615      0x796 StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_line    0x00000dab      0x899 StdPeriph_Driver/src/stm32f10x_i2c.o
@@ -4747,13 +4747,13 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_line    0x00001ed6      0xf17 StdPeriph_Driver/src/stm32f10x_tim.o
  .debug_line    0x00002ded      0x864 StdPeriph_Driver/src/stm32f10x_usart.o
  .debug_line    0x00003651      0x5da src/UART.o
- .debug_line    0x00003c2b      0x8b2 src/main.o
- .debug_line    0x000044dd      0x679 src/read_RTC.o
- .debug_line    0x00004b56      0x5df src/syscalls.o
- .debug_line    0x00005135      0x610 src/system_stm32f10x.o
- .debug_line    0x00005745       0x7e startup/startup_stm32f10x_md.o
+ .debug_line    0x00003c2b      0x880 src/main.o
+ .debug_line    0x000044ab      0x679 src/read_RTC.o
+ .debug_line    0x00004b24      0x5df src/syscalls.o
+ .debug_line    0x00005103      0x610 src/system_stm32f10x.o
+ .debug_line    0x00005713       0x7e startup/startup_stm32f10x_md.o
 
-.debug_str      0x00000000    0x5762b
+.debug_str      0x00000000    0x57651
  .debug_str     0x00000000    0x4f190 StdPeriph_Driver/src/misc.o
                               0x4f309 (size before relaxing)
  .debug_str     0x0004f190      0x5c0 StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -4768,15 +4768,15 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
                               0x4f98b (size before relaxing)
  .debug_str     0x00051ef2       0x39 src/UART.o
                               0x4f2b9 (size before relaxing)
- .debug_str     0x00051f2b     0x43ab src/main.o
-                              0x53a1e (size before relaxing)
- .debug_str     0x000562d6       0x95 src/read_RTC.o
+ .debug_str     0x00051f2b     0x43d1 src/main.o
+                              0x53a0e (size before relaxing)
+ .debug_str     0x000562fc       0x95 src/read_RTC.o
                               0x4f377 (size before relaxing)
- .debug_str     0x0005636b     0x1201 src/syscalls.o
+ .debug_str     0x00056391     0x1201 src/syscalls.o
                                0x858a (size before relaxing)
- .debug_str     0x0005756c       0x8f src/system_stm32f10x.o
+ .debug_str     0x00057592       0x8f src/system_stm32f10x.o
                               0x4f1f0 (size before relaxing)
- .debug_str     0x000575fb       0x30 startup/startup_stm32f10x_md.o
+ .debug_str     0x00057621       0x30 startup/startup_stm32f10x_md.o
                                  0x66 (size before relaxing)
 
 .comment        0x00000000       0x7f
