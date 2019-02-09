@@ -27,7 +27,7 @@ uint8_t m_unit = 0;    //M1
 uint8_t s_decade = 0;    //S10
 uint8_t s_unit = 0;    //S1
 
-char z = 0;    //respond for symbol ":"
+char colon_toggle = 0;    //respond for symbol ":"
 
 uint16_t H10 = 9133;
 uint16_t H1 = 8220;
@@ -387,17 +387,17 @@ void SysTick_Handler(void)
   break;
   }
 
-  if (z == 0)
+  if (colon_toggle == 0)
   {
     TIM_ITConfig(TIM4, TIM_IT_CC2, DISABLE);   //Disable interrupt from Timer 4 from Clock Capture 2
     TIM_ITConfig(TIM3, TIM_IT_CC3, DISABLE);   //Disable interrupt from Timer 3 from Clock Capture 3
-    z++;
+    colon_toggle++;
   }
   else
   {
     TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);   //Enable interrupt from Timer 4 from Clock Capture 2
     TIM_ITConfig(TIM3, TIM_IT_CC3, ENABLE);   //Enable interrupt from Timer 3 from Clock Capture 3
-    z = 0;
+    colon_toggle = 0;
   }
 
   TIM_OCInitTypeDef octim;
