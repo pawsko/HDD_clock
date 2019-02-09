@@ -20,12 +20,12 @@ uint16_t FullSpin;
 
 //default displayed hour after reset
 
-uint8_t n = 0;    //H10
-uint8_t m = 0;    //H1
-uint8_t l = 0;    //M10
-uint8_t k = 0;    //M1
-uint8_t j = 0;    //S10
-uint8_t i = 0;    //S1
+uint8_t h_decade = 0;    //H10
+uint8_t h_unit = 0;    //H1
+uint8_t m_decade = 0;    //M10
+uint8_t m_unit = 0;    //M1
+uint8_t s_decade = 0;    //S10
+uint8_t s_unit = 0;    //S1
 
 char z = 0;    //respond for symbol ":"
 
@@ -115,72 +115,72 @@ int main(void)
   ictim.TIM_ICFilter = 0;
   TIM_ICInit(TIM2, &ictim);
 
-  tim.TIM_CounterMode = TIM_CounterMode_Up;    //Timer_3 config for LED strobs
+  tim.TIM_CounterMode = TIM_CounterMode_Up;    //Timer_3 config for LED strobes
   tim.TIM_Prescaler = 64;
   tim.TIM_Period = 65535;
   TIM_TimeBaseInit(TIM3, &tim);
 
-  tim.TIM_CounterMode = TIM_CounterMode_Up;    //Timer_4 config for LED strobs
+  tim.TIM_CounterMode = TIM_CounterMode_Up;    //Timer_4 config for LED strobes
   tim.TIM_Prescaler = 64;
   tim.TIM_Period = 65535;
   TIM_TimeBaseInit(TIM4, &tim);
 
   //Timer_3 channel 1 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
-  octim.TIM_OutputState = TIM_OutputState_Enable;    //wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = H10;    //H10 taktów
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = H10;    //H10 pulses
   TIM_OC1Init(TIM3, &octim);   //Channel 1 initialization
 
   //Timer_3 channel 2 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
-  octim.TIM_OutputState = TIM_OutputState_Enable;    //wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = H1;    //H1 taktów
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = H1;    //H1 pulses
   TIM_OC2Init(TIM3, &octim);   //Channel 2 initialization
 
   //Timer_3 channel 3 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = HH;    //HH taktów
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = HH;    //HH pulses
   TIM_OC3Init(TIM3, &octim);   //Channel 3 initialization
 
   //Timer_3 channel 4 config
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = M10;    //M10 taktów
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = M10;    //M10 pulses
   TIM_OC4Init(TIM3, &octim);   //Channel 4 initialization
 
   //Timer_4 channel 1 config
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = M1;    //M1 taktów
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = M1;    //M1 pulses
   TIM_OC1Init(TIM4, &octim);   //Channel 1 initialization
 
   //Timer_4 channel 2 config
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = MM;    //MM taktów
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = MM;    //MM pulses
   TIM_OC2Init(TIM4, &octim);   //Channel 2 initialization
 
   //Timer_4 channel 3 config
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = S10;    //S10 taktów
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = S10;    //S10 pulses
   TIM_OC3Init(TIM4, &octim);   //Channel 3 initialization
 
   //Timer_4 channel 4 config
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = S1;    //S1 taktów
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
+  octim.TIM_Pulse = S1;    //S1 pulses
   TIM_OC4Init(TIM4, &octim);   //Channel 4 initialization
 
   TIM_ITConfig(TIM2, TIM_IT_CC2, ENABLE);
-  TIM_Cmd(TIM2, ENABLE); //Start Timer TIM2
+  TIM_Cmd(TIM2, ENABLE);    //Start Timer TIM2
 
-  TIM_ITConfig(TIM3, TIM_IT_CC1 | TIM_IT_CC2 | TIM_IT_CC3 | TIM_IT_CC4, ENABLE); //Enable interrupt from Timer 2 from Clock Capture 1, 2, 3, 4
-  TIM_Cmd(TIM3, ENABLE); //Start Timer TIM3
+  TIM_ITConfig(TIM3, TIM_IT_CC1 | TIM_IT_CC2 | TIM_IT_CC3 | TIM_IT_CC4, ENABLE);    //Enable interrupt from Timer 2 from Clock Capture 1, 2, 3, 4
+  TIM_Cmd(TIM3, ENABLE);    //Start Timer TIM3
 
-  TIM_ITConfig(TIM4, TIM_IT_CC1 | TIM_IT_CC2 | TIM_IT_CC3 | TIM_IT_CC4, ENABLE); //Enable interrupt from Timer 3 from Clock Capture 1, 2, 3, 4
-  TIM_Cmd(TIM4, ENABLE); //Start Timer TIM4
+  TIM_ITConfig(TIM4, TIM_IT_CC1 | TIM_IT_CC2 | TIM_IT_CC3 | TIM_IT_CC4, ENABLE);    //Enable interrupt from Timer 3 from Clock Capture 1, 2, 3, 4
+  TIM_Cmd(TIM4, ENABLE);    //Start Timer TIM4
 
   GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7);
 
@@ -199,45 +199,45 @@ void SysTick_Handler(void)
 {
   GPIO_WriteBit(GPIOA, GPIO_Pin_5, (BitAction)(1-GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_5)));
 
-  if ((j == 5) & (i == 10))    //If secons = 60
+  if ((s_decade == 5) & (s_unit == 10))    //If seconds = 60
   {
-    i = 0;
-    j = 0;
-    k++;    //increment minutes
+    s_unit = 0;
+    s_decade = 0;
+    m_unit++;    //increment minutes units
   }
 
-  if (i == 10)    //If seconds = 10
+  if (s_unit == 10)    //If seconds = 10
   {
-    i = 0;
-    j++;          //increment seconds decade
+    s_unit = 0;
+    s_decade++;          //increment seconds decade
   }
 
-  if ((l == 5) & (k == 10))    //If minutes = 60
+  if ((m_decade == 5) & (m_unit == 10))    //If minutes = 60
   {
-    k = 0;
-    l = 0;
-    m++;    //increment one to hours
+    m_unit = 0;
+    m_decade = 0;
+    h_unit++;    //increment hours units
   }
 
-  if (k == 10)    //If minutes = 10
+  if (m_unit == 10)    //If minutes = 10
   {
-    k = 0;
-    l++;    //increment minutes decade
+    m_unit = 0;
+    m_decade++;    //increment minutes decade
   }
 
-  if ((n == 2) & (m == 4))    //if hours = 24 reset decade and unit hours
+  if ((h_decade == 2) & (h_unit == 4))    //if hours = 24 reset decade and unit hours
   {
-    m = 0;
-    n = 0;
+    h_unit = 0;
+    h_decade = 0;
   }
 
-  if (m == 10)    //If hours = 10
+  if (h_unit == 10)    //If hours = 10
   {
-    m = 0;
-    n++;    //increment hours decade
+    h_unit = 0;
+    h_decade++;    //increment hours decade
   }
 
-  switch (n){    //hours decade
+  switch (h_decade){    //hours decade
   case 0: H10 = 9133;
   break;
   case 1: H10 = 10047;
@@ -262,7 +262,7 @@ void SysTick_Handler(void)
   break;
   }
 
-  switch (m){    //hours units
+  switch (h_unit){    //hours units
   case 0: H1 = 8220;
   break;
   case 1: H1 = 9133;
@@ -287,7 +287,7 @@ void SysTick_Handler(void)
   break;
   }
 
-  switch (l){    //minutes decades
+  switch (m_decade){    //minutes decades
   case 0: M10 = 6850;
   break;
   case 1: M10 = 7763;
@@ -312,7 +312,7 @@ void SysTick_Handler(void)
   break;
   }
 
-  switch (k){    //minutes units
+  switch (m_unit){    //minutes units
   case 0: M1 = 5937;
   break;
   case 1: M1 = 6850;
@@ -337,7 +337,7 @@ void SysTick_Handler(void)
   break;
   }
 
-  switch (j){    //seconds decades
+  switch (s_decade){    //seconds decades
   case 0: S10 = 4567;
   break;
   case 1: S10 = 5480;
@@ -362,8 +362,7 @@ void SysTick_Handler(void)
   break;
   }
 
-
-  switch (i){    //seconds units
+  switch (s_unit){    //seconds units
   case 0: S1 = 3653;
   break;
   case 1: S1 = 4567;
@@ -390,94 +389,93 @@ void SysTick_Handler(void)
 
   if (z == 0)
   {
-    TIM_ITConfig(TIM4, TIM_IT_CC2, DISABLE); //Disable interrupt from Timer 4 from Clock Capture 2
-    TIM_ITConfig(TIM3, TIM_IT_CC3, DISABLE); //Disable interrupt from Timer 3 from Clock Capture 3
+    TIM_ITConfig(TIM4, TIM_IT_CC2, DISABLE);   //Disable interrupt from Timer 4 from Clock Capture 2
+    TIM_ITConfig(TIM3, TIM_IT_CC3, DISABLE);   //Disable interrupt from Timer 3 from Clock Capture 3
     z++;
   }
   else
   {
-    TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE); //Enable interrupt from Timer 4 from Clock Capture 2
-    TIM_ITConfig(TIM3, TIM_IT_CC3, ENABLE); //Enable interrupt from Timer 3 from Clock Capture 3
+    TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);   //Enable interrupt from Timer 4 from Clock Capture 2
+    TIM_ITConfig(TIM3, TIM_IT_CC3, ENABLE);   //Enable interrupt from Timer 3 from Clock Capture 3
     z = 0;
   }
 
   TIM_OCInitTypeDef octim;
 
-  //Konfiguracja kanalu 1 Timer 3
+  //Timer_3 1st channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = H10;    //H10 pulses
+  TIM_OC1Init(TIM3, &octim);   //1st channel initialization
+
+  //Timer_3 2nd channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = H1;    //H1 pulses
+  TIM_OC2Init(TIM3, &octim);    //2nd channel initialization
+
+  //Timer_3 3rd channel config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = H10;    //H10 taktów
-  TIM_OC1Init(TIM3, &octim);   //Inicjalizacja kanalu 1
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = HH;  //HH pulses
+  TIM_OC3Init(TIM3, &octim);   //3rd channel initialization
 
-  //Konfiguracja kanalu 2 Timer 3
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = H1;  //H1 taktów
-  TIM_OC2Init(TIM3, &octim);   //Inicjalizacja kanalu 2
+  ////Timer_3 4th channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = M10;    //M10 pulses
+  TIM_OC4Init(TIM3, &octim);   //4th channel initialization
 
-  //Konfiguracja kanalu 3 Timer 3
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = HH;  //HH taktów
-  TIM_OC3Init(TIM3, &octim);   //Inicjalizacja kanalu 3
+  //Timer_4 1st channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = M1;  //M1 pulses
+  TIM_OC1Init(TIM4, &octim);    //1st channel initialization
 
-  //Konfiguracja kanalu 4 Timer 3
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = M10;    //M10 taktów
-  TIM_OC4Init(TIM3, &octim);   //Inicjalizacja kanalu 4
-
-  //Konfiguracja kanalu 1 Timer 4
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = M1;  //M1 taktów
-  TIM_OC1Init(TIM4, &octim);   //Inicjalizacja kanalu 1
-
-  //Konfiguracja kanalu 2 Timer 4
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = MM;  //MM taktów
-  TIM_OC2Init(TIM4, &octim);   //Inicjalizacja kanalu 2
+  //Timer_4 2nd channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = MM;  //MM pulses
+  TIM_OC2Init(TIM4, &octim);    //2nd channel initialization
 
 
-  //Konfiguracja kanalu 3 Timer 4
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = S10;    //HH taktów
-  TIM_OC3Init(TIM4, &octim);   //Inicjalizacja kanalu 3
+  //Timer_4 3rd channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = S10;    //HH pulses
+  TIM_OC3Init(TIM4, &octim);    //3rd channel initialization
 
-  //Konfiguracja kanalu 4 Timer 4
-  octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
-  octim.TIM_OutputState = TIM_OutputState_Enable;//wlaczenie generowania sygnalu na wyjsciu licznika
-  octim.TIM_Pulse = S1;  //S10 taktów
-  TIM_OC4Init(TIM4, &octim);   //Inicjalizacja kanalu 4
+  //Timer_4 4th channel config
+  octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
+  octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
+  octim.TIM_Pulse = S1;  //S10 pulses
+  TIM_OC4Init(TIM4, &octim);   //4th channel initialization
 
-  printf ("Time: %d%d:%d%d:%d%d\r\n", n, m, l, k, j, i);
+  printf ("Time: %d%d:%d%d:%d%d\r\n", h_decade, h_unit, m_decade, m_unit, s_decade, s_unit);
 
-  i++;
+  s_unit++;
 
 }
 
 uint32_t  SysTick_Config_Mod(uint32_t SysTick_CLKSource, uint32_t Ticks)
 {
-  //inicjalizacja licznika SysTick
-  //zastepuje funkcje z bibliotek STM w zwiazku z bledem w funcji SysTick_Config
+  //SysTick initialization
   uint32_t Settings;
 
   assert_param(IS_SYSTICK_CLK_SOURCE(SysTick_CLKSource));
 
   if (Ticks > SysTick_LOAD_RELOAD_Msk)  return (1);    //Kontrola, czy wartosc poczatkowa nie przekracza max
 
-  SysTick->LOAD = (Ticks & SysTick_LOAD_RELOAD_Msk) - 1;  //Ustaw wartosc poczatkowa licznika
-  NVIC_SetPriority (SysTick_IRQn, 0);   //Ustaw priorytet przerwania
-  SysTick->VAL  = 0;  //Ustaw wartosc aktualna licznika
-  Settings=SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;  //Ustaw flagi wlaczenia SysTick IRQ  i samego licznika
-  if (SysTick_CLKSource == SysTick_CLKSource_HCLK){    //Wybierz flage ustawien zrodla sygnalu zegarowego
+  SysTick->LOAD = (Ticks & SysTick_LOAD_RELOAD_Msk) - 1;  //Set timer start value
+  NVIC_SetPriority (SysTick_IRQn, 0);   //set interrupt priority
+  SysTick->VAL  = 0;  //Set value
+  Settings=SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
+  if (SysTick_CLKSource == SysTick_CLKSource_HCLK){
     Settings |= SysTick_CLKSource_HCLK;
   } else {
     Settings &= SysTick_CLKSource_HCLK_Div8;
   }
-  SysTick->CTRL = Settings;    //Zapisz ustawienia do rejestru sterujacego SysTick (i wlacz licznik)
+  SysTick->CTRL = Settings;    //Save settings to SysTick register and switch on timer
   return (0);
 }
 
@@ -485,42 +483,39 @@ void TIM2_IRQHandler(void)
 {
 if (TIM_GetITStatus(TIM2, TIM_IT_Update) == SET)
   {
-  TIM_ClearITPendingBit(TIM2, TIM_IT_Trigger);
+    TIM_ClearITPendingBit(TIM2, TIM_IT_Trigger);
   }
-if (TIM_GetITStatus(TIM2, TIM_IT_CC2) == SET)   // Jezeli przerwanie od kanalu 2
+if (TIM_GetITStatus(TIM2, TIM_IT_CC2) == SET)    //If interrupt from 2nd channel
   {
-    TIM_ClearITPendingBit(TIM2, TIM_IT_CC2);   // Zeruj flage przerwania
+    TIM_ClearITPendingBit(TIM2, TIM_IT_CC2);    //reset interrupt flag
 
-    FullSpin = TIM_GetCapture2(TIM2);         // Odczytaj wartosc rejetru CCR kanalu 2
-    TIM_SetCounter(TIM2, 0);
-    TIM_SetCounter(TIM3, 0);              //zerowanie licznika 2
-    TIM_SetCounter(TIM4, 0);
+    FullSpin = TIM_GetCapture2(TIM2);    //Read register CCR value for 2nd channel
+    TIM_SetCounter(TIM2, 0);    //Timer_2 reset
+    TIM_SetCounter(TIM3, 0);    //Timer_3 reset
+    TIM_SetCounter(TIM4, 0);    //Timer_4 reset
     GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7);
-    //GPIO_SetBits(GPIOC, GPIO_Pin_2 | GPIO_Pin_5);
-    //GPIO_WriteBit(GPIOC, GPIO_Pin_2, (BitAction)(1 - GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_2)));    //LED4
-    //GPIO_WriteBit(GPIOC, GPIO_Pin_5, (BitAction)(1 - GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_5)));    //LED4
   }
 }
 
 void TIM3_IRQHandler(void)
 {
-  if (TIM_GetITStatus(TIM3, TIM_IT_Update) == SET)   // Jezeli przerwanie od zdarzenia w liczniku 3
+  if (TIM_GetITStatus(TIM3, TIM_IT_Update) == SET)   //if interrupt from Timer_3 event
   {
-    TIM_ClearITPendingBit(TIM3, TIM_IT_Update);   // Zeruj flage przerwania
+    TIM_ClearITPendingBit(TIM3, TIM_IT_Update);     //reset interrupt flag
   }
-  if (TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)  {  //osiagnienie wartosci z CC1
+  if (TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)  {    //value from CC1 is achieved
     TIM_ClearITPendingBit(TIM3, TIM_IT_CC1);
     GPIO_SetBits(GPIOC, GPIO_Pin_0);
   }
-  if (TIM_GetITStatus(TIM3, TIM_IT_CC2) != RESET)  {  //osiagnienie wartosci z CC2
+  if (TIM_GetITStatus(TIM3, TIM_IT_CC2) != RESET)  {    //value from CC2 is achieved
     TIM_ClearITPendingBit(TIM3, TIM_IT_CC2);
     GPIO_SetBits(GPIOC, GPIO_Pin_1);
   }
-  if (TIM_GetITStatus(TIM3, TIM_IT_CC3) != RESET)  {  //osiagnienie wartosci z CC3
+  if (TIM_GetITStatus(TIM3, TIM_IT_CC3) != RESET)  {    //value from CC3 is achieved
     TIM_ClearITPendingBit(TIM3, TIM_IT_CC3);
     GPIO_SetBits(GPIOC, GPIO_Pin_2);
   }
-  if (TIM_GetITStatus(TIM3, TIM_IT_CC4) != RESET)  {  //osiagnienie wartosci z CC4
+  if (TIM_GetITStatus(TIM3, TIM_IT_CC4) != RESET)  {    //value from CC4 is achieved
     TIM_ClearITPendingBit(TIM3, TIM_IT_CC4);
     GPIO_SetBits(GPIOC, GPIO_Pin_3);
   }
@@ -528,23 +523,23 @@ void TIM3_IRQHandler(void)
 
 void TIM4_IRQHandler(void)
 {
-  if (TIM_GetITStatus(TIM4, TIM_IT_Update) == SET)   // Jezeli przerwanie od zdarzenia w liczniku 4
+  if (TIM_GetITStatus(TIM4, TIM_IT_Update) == SET)   //if interrupt from Timer_4 event
   {
-    TIM_ClearITPendingBit(TIM4, TIM_IT_Update);   // Zeruj flage przerwania
+    TIM_ClearITPendingBit(TIM4, TIM_IT_Update);    //reset interrupt flag
   }
-  if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)  {//osiagnienie wartosci z CC1
+  if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)  {    //value from CC1 is achieved
     TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
     GPIO_SetBits(GPIOC, GPIO_Pin_4);
   }
-  if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)  {  //osiagnienie wartosci z CC2
+  if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)  {    //value from CC2 is achieved
     TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
     GPIO_SetBits(GPIOC, GPIO_Pin_5);
   }
-  if (TIM_GetITStatus(TIM4, TIM_IT_CC3) != RESET)  {  //osiagnienie wartosci z CC3
+  if (TIM_GetITStatus(TIM4, TIM_IT_CC3) != RESET)  {    //value from CC3 is achieved
     TIM_ClearITPendingBit(TIM4, TIM_IT_CC3);
     GPIO_SetBits(GPIOC, GPIO_Pin_6);
   }
-  if (TIM_GetITStatus(TIM4, TIM_IT_CC4) != RESET)  {  //osiagnienie wartosci z CC4
+  if (TIM_GetITStatus(TIM4, TIM_IT_CC4) != RESET)  {    //value from CC4 is achieved
     TIM_ClearITPendingBit(TIM4, TIM_IT_CC4);
     GPIO_SetBits(GPIOC, GPIO_Pin_7);
   }
