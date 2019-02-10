@@ -11,6 +11,8 @@
 #include "stdio.h"
 #include "stm32f10x.h"
 
+//dynamic rotated count
+
 uint32_t SysTick_Config_Mod(uint32_t SysTick_CLKSource, uint32_t Ticks);
 
 uint16_t delay = 24;    //this value gives 25,48us
