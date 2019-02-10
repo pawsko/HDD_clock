@@ -216,7 +216,7 @@ void SysTick_Handler(void)
     s_decade++;          //increment seconds decade
   }
 
-  if ((m_decade == 5) & (m_unit == 10))    //If minutes = 60
+  if ((m_decade == 5) && (m_unit == 10))    //If minutes = 60
   {
     m_unit = 0;
     m_decade = 0;
@@ -229,7 +229,7 @@ void SysTick_Handler(void)
     m_decade++;    //increment minutes decade
   }
 
-  if ((h_decade == 2) & (h_unit == 4))    //if hours = 24 reset decade and unit hours
+  if ((h_decade == 2) && (h_unit == 4))    //if hours = 24 reset decade and unit hours
   {
     h_unit = 0;
     h_decade = 0;
@@ -244,52 +244,17 @@ void SysTick_Handler(void)
   switch (h_decade){    //hours decade
   case 0:
   {
-    H10 = 9133;
+    H10 = FullSpin * 10 / 12;
     break;
   }
   case 1:
   {
-    H10 = 10047;
+    H10 = FullSpin * 11 / 12;
     break;
   }
   case 2:
   {
     H10 = 0;
-    break;
-  }
-  case 3:
-  {
-    H10 = 913;
-    break;
-  }
-  case 4:
-  {
-    H10 = 1827;
-    break;
-  }
-  case 5:
-  {
-    H10 = 3653;
-    break;
-  }
-  case 6:
-  {
-    H10 = 4567;
-    break;
-  }
-  case 7:
-  {
-    H10 = 5480;
-    break;
-  }
-  case 8:
-  {
-    H10 = 6393;
-    break;
-  }
-  case 9:
-  {
-    H10 = 7307;
     break;
   }
   default:
@@ -301,17 +266,17 @@ void SysTick_Handler(void)
   switch (h_unit){    //hours units
   case 0:
   {
-    H1 = 8220;
+    H1 = FullSpin * 9 / 12;
     break;
   }
   case 1:
   {
-    H1 = 9133;
+    H1 = FullSpin * 10 / 12;
     break;
   }
   case 2:
   {
-    H1 = 10047;
+    H1 = FullSpin * 11 / 12;
     break;
   }
   case 3:
@@ -321,32 +286,32 @@ void SysTick_Handler(void)
   }
   case 4:
   {
-    H1 = 913;
+    H1 = FullSpin * 1 / 12;
     break;
   }
   case 5:
   {
-    H1 = 2740;
+    H1 = FullSpin * 3 / 12;
     break;
   }
   case 6:
   {
-    H1 = 3653;
+    H1 = FullSpin * 4 / 12;
     break;
   }
   case 7:
   {
-    H1 = 4567;
+    H1 = FullSpin * 5 / 12;
     break;
   }
   case 8:
   {
-    H1 = 5480;
+    H1 = FullSpin * 6 / 12;
     break;
   }
   case 9:
   {
-    H1 = 6393;
+    H1 = FullSpin * 7 / 12;
     break;
   }
   default:
@@ -358,52 +323,52 @@ void SysTick_Handler(void)
   switch (m_decade){    //minutes decades
   case 0:
   {
-    M10 = 6850;
+    M10 = FullSpin * 15 / 24;
     break;
   }
   case 1:
   {
-    M10 = 7763;
+    M10 = FullSpin * 17 / 24;
     break;
   }
   case 2:
   {
-    M10 = 8677;
+    M10 = FullSpin * 19 / 24;
     break;
   }
   case 3:
   {
-    M10 = 9590;
+    M10 = FullSpin * 21 / 24;
     break;
   }
   case 4:
   {
-    M10 = 10503;
+    M10 = FullSpin * 23 / 24;
     break;
   }
   case 5:
   {
-    M10 = 1370;
+    M10 = FullSpin * 3 / 24;
     break;
   }
   case 6:
   {
-    M10 = 2283;
+    M10 = FullSpin * 5 / 24;
     break;
   }
   case 7:
   {
-    M10 = 3197;
+    M10 = FullSpin * 71 / 24;
     break;
   }
   case 8:
   {
-    M10 = 4110;
+    M10 = FullSpin * 9 / 24;
     break;
   }
   case 9:
   {
-    M10 = 5023;
+    M10 = FullSpin * 11 / 24;
     break;
   }
   default:
@@ -415,52 +380,52 @@ void SysTick_Handler(void)
   switch (m_unit){    //minutes units
   case 0:
   {
-    M1 = 5937;
+    M1 = FullSpin * 13 / 24;
     break;
   }
   case 1:
   {
-    M1 = 6850;
+    M1 = FullSpin * 15 / 24;
     break;
   }
   case 2:
   {
-    M1 = 7763;
+    M1 = FullSpin * 17 / 24;
     break;
   }
   case 3:
   {
-    M1 = 8677;
+    M1 = FullSpin * 19 / 24;
     break;
   }
   case 4:
   {
-    M1 = 9590;
+    M1 = FullSpin * 21 / 24;
     break;
   }
   case 5:
   {
-    M1 = 457;
+    M1 = FullSpin * 1 / 24;
     break;
   }
   case 6:
   {
-    M1 = 1370;
+    M1 = FullSpin * 3 / 24;
     break;
   }
   case 7:
   {
-    M1 = 2283;
+    M1 = FullSpin * 5 / 24;
     break;
   }
   case 8:
   {
-    M1 = 3197;
+    M1 = FullSpin * 7 / 24;
     break;
   }
   case 9:
   {
-    M1 = 4110;
+    M1 = FullSpin * 9 / 24;
     break;
   }
   default:
@@ -472,32 +437,32 @@ void SysTick_Handler(void)
   switch (s_decade){    //seconds decades
   case 0:
   {
-    S10 = 4567;
+    S10 = FullSpin * 5 / 12;
     break;
   }
   case 1:
   {
-    S10 = 5480;
+    S10 = FullSpin * 6 / 12;
     break;
   }
   case 2:
   {
-    S10 = 6393;
+    S10 = FullSpin * 7 / 12;
     break;
   }
   case 3:
   {
-    S10 = 7307;
+    S10 = FullSpin *8 / 12;
     break;
   }
   case 4:
   {
-    S10 = 8220;
+    S10 = FullSpin * 9 / 12;
     break;
   }
   case 5:
   {
-    S10 = 10047;
+    S10 = FullSpin * 11 / 12;
     break;
   }
   case 6:
@@ -507,17 +472,17 @@ void SysTick_Handler(void)
   }
   case 7:
   {
-    S10 = 913;
+    S10 = FullSpin * 1 / 12;
     break;
   }
   case 8:
   {
-    S10 = 1827;
+    S10 = FullSpin * 2 / 12;
     break;
   }
   case 9:
   {
-    S10 = 2740;
+    S10 = FullSpin * 3 / 12;
     break;
   }
   default:
@@ -529,37 +494,37 @@ void SysTick_Handler(void)
   switch (s_unit){    //seconds units
   case 0:
   {
-    S1 = 3653;
+    S1 = FullSpin * 4 / 12;
     break;
   }
   case 1:
   {
-    S1 = 4567;
+    S1 = FullSpin * 5 / 12;
     break;
   }
   case 2:
   {
-    S1 = 5480;
+    S1 = FullSpin * 6 / 12;
     break;
   }
   case 3:
   {
-    S1 = 6393;
+    S1 = FullSpin * 7 / 12;
     break;
   }
   case 4:
   {
-    S1 = 7307;
+    S1 = FullSpin * 8 / 12;
     break;
   }
   case 5:
   {
-    S1 = 9133;
+    S1 = FullSpin * 10 / 12;
     break;
   }
   case 6:
   {
-    S1 = 10047;
+    S1 = FullSpin * 11 / 12;
     break;
   }
   case 7:
@@ -569,12 +534,12 @@ void SysTick_Handler(void)
   }
   case 8:
   {
-    S1 = 913;
+    S1 = FullSpin * 1 / 12;
     break;
   }
   case 9:
   {
-    S1 = 1827;
+    S1 = FullSpin * 2 / 12;
     break;
   }
   default:
