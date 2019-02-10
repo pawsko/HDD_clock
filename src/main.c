@@ -185,12 +185,14 @@ int main(void)
   GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7);
 
   if (SysTick_Config_Mod(SysTick_CLKSource_HCLK_Div8, 8000000ul))
+  {
+    while(1)    // infinity loop in error case
     {
-      while(1);    // infinity loop in error case
     }
+  }
 
-  while(1){
-    ;
+  while(1)
+  {
   }
 
 }
@@ -199,7 +201,7 @@ void SysTick_Handler(void)
 {
   GPIO_WriteBit(GPIOA, GPIO_Pin_5, (BitAction)(1-GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_5)));
 
-  if ((s_decade == 5) & (s_unit == 10))    //If seconds = 60
+  if ((s_decade == 5) && (s_unit == 10))    //If seconds = 60
   {
     s_unit = 0;
     s_decade = 0;
@@ -238,153 +240,345 @@ void SysTick_Handler(void)
   }
 
   switch (h_decade){    //hours decade
-  case 0: H10 = 9133;
-  break;
-  case 1: H10 = 10047;
-  break;
-  case 2: H10 = 0;
-  break;
-  case 3: H10 = 913;
-  break;
-  case 4: H10 = 1827;
-  break;
-  case 5: H10 = 3653;
-  break;
-  case 6: H10 = 4567;
-  break;
-  case 7: H10 = 5480;
-  break;
-  case 8: H10 = 6393;
-  break;
-  case 9: H10 = 7307;
-  break;
+  case 0:
+  {
+    H10 = 9133;
+    break;
+  }
+  case 1:
+  {
+    H10 = 10047;
+    break;
+  }
+  case 2:
+  {
+    H10 = 0;
+    break;
+  }
+  case 3:
+  {
+    H10 = 913;
+    break;
+  }
+  case 4:
+  {
+    H10 = 1827;
+    break;
+  }
+  case 5:
+  {
+    H10 = 3653;
+    break;
+  }
+  case 6:
+  {
+    H10 = 4567;
+    break;
+  }
+  case 7:
+  {
+    H10 = 5480;
+    break;
+  }
+  case 8:
+  {
+    H10 = 6393;
+    break;
+  }
+  case 9:
+  {
+    H10 = 7307;
+    break;
+  }
   default:
+  {
   break;
+  }
   }
 
   switch (h_unit){    //hours units
-  case 0: H1 = 8220;
-  break;
-  case 1: H1 = 9133;
-  break;
-  case 2: H1 = 10047;
-  break;
-  case 3: H1 = 0;
-  break;
-  case 4: H1 = 913;
-  break;
-  case 5: H1 = 2740;
-  break;
-  case 6: H1 = 3653;
-  break;
-  case 7: H1 = 4567;
-  break;
-  case 8: H1 = 5480;
-  break;
-  case 9: H1 = 6393;
-  break;
+  case 0:
+  {
+    H1 = 8220;
+    break;
+  }
+  case 1:
+  {
+    H1 = 9133;
+    break;
+  }
+  case 2:
+  {
+    H1 = 10047;
+    break;
+  }
+  case 3:
+  {
+    H1 = 0;
+    break;
+  }
+  case 4:
+  {
+    H1 = 913;
+    break;
+  }
+  case 5:
+  {
+    H1 = 2740;
+    break;
+  }
+  case 6:
+  {
+    H1 = 3653;
+    break;
+  }
+  case 7:
+  {
+    H1 = 4567;
+    break;
+  }
+  case 8:
+  {
+    H1 = 5480;
+    break;
+  }
+  case 9:
+  {
+    H1 = 6393;
+    break;
+  }
   default:
-  break;
+  {
+    break;
+  }
   }
 
   switch (m_decade){    //minutes decades
-  case 0: M10 = 6850;
-  break;
-  case 1: M10 = 7763;
-  break;
-  case 2: M10 = 8677;
-  break;
-  case 3: M10 = 9590;
-  break;
-  case 4: M10 = 10503;
-  break;
-  case 5: M10 = 1370;
-  break;
-  case 6: M10 = 2283;
-  break;
-  case 7: M10 = 3197;
-  break;
-  case 8: M10 = 4110;
-  break;
-  case 9: M10 = 5023;
-  break;
+  case 0:
+  {
+    M10 = 6850;
+    break;
+  }
+  case 1:
+  {
+    M10 = 7763;
+    break;
+  }
+  case 2:
+  {
+    M10 = 8677;
+    break;
+  }
+  case 3:
+  {
+    M10 = 9590;
+    break;
+  }
+  case 4:
+  {
+    M10 = 10503;
+    break;
+  }
+  case 5:
+  {
+    M10 = 1370;
+    break;
+  }
+  case 6:
+  {
+    M10 = 2283;
+    break;
+  }
+  case 7:
+  {
+    M10 = 3197;
+    break;
+  }
+  case 8:
+  {
+    M10 = 4110;
+    break;
+  }
+  case 9:
+  {
+    M10 = 5023;
+    break;
+  }
   default:
-  break;
+  {
+    break;
+  }
   }
 
   switch (m_unit){    //minutes units
-  case 0: M1 = 5937;
-  break;
-  case 1: M1 = 6850;
-  break;
-  case 2: M1 = 7763;
-  break;
-  case 3: M1 = 8677;
-  break;
-  case 4: M1 = 9590;
-  break;
-  case 5: M1 = 457;
-  break;
-  case 6: M1 = 1370;
-  break;
-  case 7: M1 = 2283;
-  break;
-  case 8: M1 = 3197;
-  break;
-  case 9: M1 = 4110;
-  break;
+  case 0:
+  {
+    M1 = 5937;
+    break;
+  }
+  case 1:
+  {
+    M1 = 6850;
+    break;
+  }
+  case 2:
+  {
+    M1 = 7763;
+    break;
+  }
+  case 3:
+  {
+    M1 = 8677;
+    break;
+  }
+  case 4:
+  {
+    M1 = 9590;
+    break;
+  }
+  case 5:
+  {
+    M1 = 457;
+    break;
+  }
+  case 6:
+  {
+    M1 = 1370;
+    break;
+  }
+  case 7:
+  {
+    M1 = 2283;
+    break;
+  }
+  case 8:
+  {
+    M1 = 3197;
+    break;
+  }
+  case 9:
+  {
+    M1 = 4110;
+    break;
+  }
   default:
-  break;
+  {
+    break;
+  }
   }
 
   switch (s_decade){    //seconds decades
-  case 0: S10 = 4567;
-  break;
-  case 1: S10 = 5480;
-  break;
-  case 2: S10 = 6393;
-  break;
-  case 3: S10 = 7307;
-  break;
-  case 4: S10 = 8220;
-  break;
-  case 5: S10 = 10047;
-  break;
-  case 6: S10 = 0;
-  break;
-  case 7: S10 = 913;
-  break;
-  case 8: S10 = 1827;
-  break;
-  case 9: S10 = 2740;
-  break;
+  case 0:
+  {
+    S10 = 4567;
+    break;
+  }
+  case 1:
+  {
+    S10 = 5480;
+    break;
+  }
+  case 2:
+  {
+    S10 = 6393;
+    break;
+  }
+  case 3:
+  {
+    S10 = 7307;
+    break;
+  }
+  case 4:
+  {
+    S10 = 8220;
+    break;
+  }
+  case 5:
+  {
+    S10 = 10047;
+    break;
+  }
+  case 6:
+  {
+    S10 = 0;
+    break;
+  }
+  case 7:
+  {
+    S10 = 913;
+    break;
+  }
+  case 8:
+  {
+    S10 = 1827;
+    break;
+  }
+  case 9:
+  {
+    S10 = 2740;
+    break;
+  }
   default:
-  break;
+  {
+    break;
+  }
   }
 
   switch (s_unit){    //seconds units
-  case 0: S1 = 3653;
-  break;
-  case 1: S1 = 4567;
-  break;
-  case 2: S1 = 5480;
-  break;
-  case 3: S1 = 6393;
-  break;
-  case 4: S1 = 7307;
-  break;
-  case 5: S1 = 9133;
-  break;
-  case 6: S1 = 10047;
-  break;
-  case 7: S1 = 0;
-  break;
-  case 8: S1 = 913;
-  break;
-  case 9: S1 = 1827;
-  break;
+  case 0:
+  {
+    S1 = 3653;
+    break;
+  }
+  case 1:
+  {
+    S1 = 4567;
+    break;
+  }
+  case 2:
+  {
+    S1 = 5480;
+    break;
+  }
+  case 3:
+  {
+    S1 = 6393;
+    break;
+  }
+  case 4:
+  {
+    S1 = 7307;
+    break;
+  }
+  case 5:
+  {
+    S1 = 9133;
+    break;
+  }
+  case 6:
+  {
+    S1 = 10047;
+    break;
+  }
+  case 7:
+  {
+    S1 = 0;
+    break;
+  }
+  case 8:
+  {
+    S1 = 913;
+    break;
+  }
+  case 9:
+  {
+    S1 = 1827;
+    break;
+  }
   default:
-  break;
+  {
+    break;
+  }
   }
 
   if (colon_toggle == 0)
@@ -470,9 +664,12 @@ uint32_t  SysTick_Config_Mod(uint32_t SysTick_CLKSource, uint32_t Ticks)
   NVIC_SetPriority (SysTick_IRQn, 0);   //set interrupt priority
   SysTick->VAL  = 0;  //Set value
   Settings=SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
-  if (SysTick_CLKSource == SysTick_CLKSource_HCLK){
+  if (SysTick_CLKSource == SysTick_CLKSource_HCLK)
+  {
     Settings |= SysTick_CLKSource_HCLK;
-  } else {
+  }
+  else
+  {
     Settings &= SysTick_CLKSource_HCLK_Div8;
   }
   SysTick->CTRL = Settings;    //Save settings to SysTick register and switch on timer
@@ -481,11 +678,11 @@ uint32_t  SysTick_Config_Mod(uint32_t SysTick_CLKSource, uint32_t Ticks)
 
 void TIM2_IRQHandler(void)
 {
-if (TIM_GetITStatus(TIM2, TIM_IT_Update) == SET)
+  if (TIM_GetITStatus(TIM2, TIM_IT_Update) == SET)
   {
     TIM_ClearITPendingBit(TIM2, TIM_IT_Trigger);
   }
-if (TIM_GetITStatus(TIM2, TIM_IT_CC2) == SET)    //If interrupt from 2nd channel
+  if (TIM_GetITStatus(TIM2, TIM_IT_CC2) == SET)    //If interrupt from 2nd channel
   {
     TIM_ClearITPendingBit(TIM2, TIM_IT_CC2);    //reset interrupt flag
 

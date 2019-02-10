@@ -161,13 +161,13 @@ void read_RTC(void)
     ampm = 0x20 & data2;
     ampm >>= 4;
     if (ampm == DISABLE) // means AM
-      {
-        printf(" AM\r\n");
-      }
-      else
-      {
-        printf(" PM\r\n");
-      }
+    {
+      printf(" AM\r\n");
+    }
+    else
+    {
+      printf(" PM\r\n");
+    }
   }
 
   printf("\r\n");
