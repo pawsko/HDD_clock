@@ -20,7 +20,7 @@ int __io_putchar(int c)
   return c;
 }
 
-void init_UART(void)
+void initUart(void)
 {
   GPIO_InitTypeDef gpio;
   USART_InitTypeDef uart;

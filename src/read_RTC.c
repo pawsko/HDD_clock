@@ -1,5 +1,5 @@
 /*
- * read_RTC.c
+ * readRtc.c
  *
  *  Created on: 01.01.2019
  *      Author: DJPifPaf
@@ -14,7 +14,7 @@ extern uint8_t minuteUnit;
 extern uint8_t secondDecade;
 extern uint8_t secondUnit;
 
-void init_I2C_for_RTC(void)
+void initI2cForRtc(void)
 {
   GPIO_InitTypeDef gpio;
   I2C_InitTypeDef i2c;
@@ -40,7 +40,7 @@ void init_I2C_for_RTC(void)
 
 }
 
-void read_RTC(void)
+void readRtc(void)
 {
   I2C_GenerateSTART(I2C1, ENABLE);    //Start
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT) != SUCCESS);

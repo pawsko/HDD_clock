@@ -3900,9 +3900,9 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
  .text.__io_putchar
                 0x08002548       0x1c src/UART.o
                 0x08002548                __io_putchar
- .text.init_UART
+ .text.initUart
                 0x08002564       0x84 src/UART.o
-                0x08002564                init_UART
+                0x08002564                initUart
  .text.NVIC_SetPriority
                 0x080025e8       0x54 src/main.o
  .text.main     0x0800263c      0xd10 src/main.o
@@ -3922,12 +3922,11 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
  .text.TIM4_IRQHandler
                 0x0800356c       0xac src/main.o
                 0x0800356c                TIM4_IRQHandler
- .text.init_I2C_for_RTC
+ .text.initI2cForRtc
                 0x08003618       0x90 src/read_RTC.o
-                0x08003618                init_I2C_for_RTC
- .text.read_RTC
-                0x080036a8      0x338 src/read_RTC.o
-                0x080036a8                read_RTC
+                0x08003618                initI2cForRtc
+ .text.readRtc  0x080036a8      0x338 src/read_RTC.o
+                0x080036a8                readRtc
  .text._read    0x080039e0       0x3a src/syscalls.o
                 0x080039e0                _read
  .text._write   0x08003a1a       0x38 src/syscalls.o
@@ -4755,7 +4754,7 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_line    0x000050c8      0x610 src/system_stm32f10x.o
  .debug_line    0x000056d8       0x7e startup/startup_stm32f10x_md.o
 
-.debug_str      0x00000000    0x57738
+.debug_str      0x00000000    0x57733
  .debug_str     0x00000000    0x4f190 StdPeriph_Driver/src/misc.o
                               0x4f309 (size before relaxing)
  .debug_str     0x0004f190      0x5c0 StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -4768,17 +4767,17 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
                               0x4fd7f (size before relaxing)
  .debug_str     0x00051702      0x7f0 StdPeriph_Driver/src/stm32f10x_usart.o
                               0x4f98b (size before relaxing)
- .debug_str     0x00051ef2       0x5f src/UART.o
-                              0x4f2a9 (size before relaxing)
- .debug_str     0x00051f51     0x4482 src/main.o
-                              0x53ae5 (size before relaxing)
- .debug_str     0x000563d3       0xa5 src/read_RTC.o
-                              0x4f3a9 (size before relaxing)
- .debug_str     0x00056478     0x1201 src/syscalls.o
+ .debug_str     0x00051ef2       0x5e src/UART.o
+                              0x4f2a8 (size before relaxing)
+ .debug_str     0x00051f50     0x447e src/main.o
+                              0x53ae0 (size before relaxing)
+ .debug_str     0x000563ce       0xa5 src/read_RTC.o
+                              0x4f3a5 (size before relaxing)
+ .debug_str     0x00056473     0x1201 src/syscalls.o
                                0x857a (size before relaxing)
- .debug_str     0x00057679       0x8f src/system_stm32f10x.o
+ .debug_str     0x00057674       0x8f src/system_stm32f10x.o
                               0x4f1f0 (size before relaxing)
- .debug_str     0x00057708       0x30 startup/startup_stm32f10x_md.o
+ .debug_str     0x00057703       0x30 startup/startup_stm32f10x_md.o
                                  0x66 (size before relaxing)
 
 .comment        0x00000000       0x7f

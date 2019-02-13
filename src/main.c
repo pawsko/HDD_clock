@@ -47,9 +47,9 @@ uint16_t second1 = 3653;
 
 int main(void)
 {
-  init_UART();
-  init_I2C_for_RTC();
-  read_RTC();
+  initUart();
+  initI2cForRtc();
+  readRtc();
 
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);    //start USART
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM3 | RCC_APB1Periph_TIM4, ENABLE);    //TIMER 2, 3 i 4 started
