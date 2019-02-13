@@ -135,12 +135,12 @@ __lock___sinit_recursive_mutex
                     0x1               c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
 __lock___malloc_recursive_mutex
                     0x1               c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
+fullSpin            0x2               src/main.o
 __lock___at_quick_exit_mutex
                     0x1               c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
 __lock___dd_hash_mutex
                     0x1               c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
 __lock___tz_mutex   0x1               c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
-FullSpin            0x2               src/main.o
 __lock___sfp_recursive_mutex
                     0x1               c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
 
@@ -4311,14 +4311,14 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
  .data          0x20000014       0x14 src/main.o
                 0x20000014                delay
                 0x20000016                strob
-                0x20000018                H10
-                0x2000001a                H1
-                0x2000001c                HH
-                0x2000001e                M10
-                0x20000020                M1
-                0x20000022                MM
-                0x20000024                S10
-                0x20000026                S1
+                0x20000018                hour10
+                0x2000001a                hour1
+                0x2000001c                colonHoursMinutes
+                0x2000001e                minute10
+                0x20000020                minute1
+                0x20000022                colonMinutesSeconds
+                0x20000024                second10
+                0x20000026                second1
  *(.data*)
  .data._impure_ptr
                 0x20000028        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-impure.o)
@@ -4354,19 +4354,19 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
  *(.bss)
  .bss           0x200009d8       0x1c c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/crtbegin.o
  .bss           0x200009f4       0x12 src/main.o
-                0x200009f4                SysTick1ms
-                0x200009f6                SysTick100ms
+                0x200009f4                sysTick1Ms
+                0x200009f6                sysTick100Ms
                 0x200009f8                step
-                0x200009fc                Task100ms
-                0x200009fd                Task1ms
-                0x200009fe                NewSpin
-                0x200009ff                h_decade
-                0x20000a00                h_unit
-                0x20000a01                m_decade
-                0x20000a02                m_unit
-                0x20000a03                s_decade
-                0x20000a04                s_unit
-                0x20000a05                colon_toggle
+                0x200009fc                task100ms
+                0x200009fd                task1ms
+                0x200009fe                newSpin
+                0x200009ff                hourDecade
+                0x20000a00                hourUnit
+                0x20000a01                minuteDecade
+                0x20000a02                minuteUnit
+                0x20000a03                secondDecade
+                0x20000a04                secondUnit
+                0x20000a05                colonToggle
  *fill*         0x20000a06        0x2 
  .bss           0x20000a08        0x8 src/syscalls.o
                 0x20000a08                __env
@@ -4385,7 +4385,7 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x20000a40                __malloc_top_pad
  *(COMMON)
  COMMON         0x20000a44        0x2 src/main.o
-                0x20000a44                FullSpin
+                0x20000a44                fullSpin
  *fill*         0x20000a46        0x2 
  COMMON         0x20000a48       0x21 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc.a(lib_a-lock.o)
                 0x20000a48                __lock___atexit_recursive_mutex
@@ -4576,7 +4576,7 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x00000c4c       0x1d c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/crtn.o
 OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x791b
+.debug_info     0x00000000     0x7920
  .debug_info    0x00000000      0x54b StdPeriph_Driver/src/misc.o
  .debug_info    0x0000054b      0x702 StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_info    0x00000c4d      0xb17 StdPeriph_Driver/src/stm32f10x_i2c.o
@@ -4584,13 +4584,13 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_info    0x00002016     0x1c6a StdPeriph_Driver/src/stm32f10x_tim.o
  .debug_info    0x00003c80      0x9fa StdPeriph_Driver/src/stm32f10x_usart.o
  .debug_info    0x0000467a      0x3d2 src/UART.o
- .debug_info    0x00004a4c     0x1572 src/main.o
- .debug_info    0x00005fbe      0x594 src/read_RTC.o
- .debug_info    0x00006552      0xf2e src/syscalls.o
- .debug_info    0x00007480      0x479 src/system_stm32f10x.o
- .debug_info    0x000078f9       0x22 startup/startup_stm32f10x_md.o
+ .debug_info    0x00004a4c     0x1577 src/main.o
+ .debug_info    0x00005fc3      0x594 src/read_RTC.o
+ .debug_info    0x00006557      0xf2e src/syscalls.o
+ .debug_info    0x00007485      0x479 src/system_stm32f10x.o
+ .debug_info    0x000078fe       0x22 startup/startup_stm32f10x_md.o
 
-.debug_abbrev   0x00000000     0x13ed
+.debug_abbrev   0x00000000     0x13dc
  .debug_abbrev  0x00000000      0x177 StdPeriph_Driver/src/misc.o
  .debug_abbrev  0x00000177      0x1e4 StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_abbrev  0x0000035b      0x196 StdPeriph_Driver/src/stm32f10x_i2c.o
@@ -4598,11 +4598,11 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_abbrev  0x000006c5      0x1c8 StdPeriph_Driver/src/stm32f10x_tim.o
  .debug_abbrev  0x0000088d      0x194 StdPeriph_Driver/src/stm32f10x_usart.o
  .debug_abbrev  0x00000a21      0x13f src/UART.o
- .debug_abbrev  0x00000b60      0x302 src/main.o
- .debug_abbrev  0x00000e62      0x163 src/read_RTC.o
- .debug_abbrev  0x00000fc5      0x2aa src/syscalls.o
- .debug_abbrev  0x0000126f      0x16c src/system_stm32f10x.o
- .debug_abbrev  0x000013db       0x12 startup/startup_stm32f10x_md.o
+ .debug_abbrev  0x00000b60      0x2f1 src/main.o
+ .debug_abbrev  0x00000e51      0x163 src/read_RTC.o
+ .debug_abbrev  0x00000fb4      0x2aa src/syscalls.o
+ .debug_abbrev  0x0000125e      0x16c src/system_stm32f10x.o
+ .debug_abbrev  0x000013ca       0x12 startup/startup_stm32f10x_md.o
 
 .debug_aranges  0x00000000      0x8c0
  .debug_aranges
@@ -4741,7 +4741,7 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_macro   0x000103cf       0x88 src/syscalls.o
  .debug_macro   0x00010457      0x19d src/system_stm32f10x.o
 
-.debug_line     0x00000000     0x5758
+.debug_line     0x00000000     0x5756
  .debug_line    0x00000000      0x615 StdPeriph_Driver/src/misc.o
  .debug_line    0x00000615      0x796 StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_line    0x00000dab      0x899 StdPeriph_Driver/src/stm32f10x_i2c.o
@@ -4749,13 +4749,13 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
  .debug_line    0x00001ed6      0xf17 StdPeriph_Driver/src/stm32f10x_tim.o
  .debug_line    0x00002ded      0x864 StdPeriph_Driver/src/stm32f10x_usart.o
  .debug_line    0x00003651      0x5aa src/UART.o
- .debug_line    0x00003bfb      0x8a7 src/main.o
- .debug_line    0x000044a2      0x649 src/read_RTC.o
- .debug_line    0x00004aeb      0x5df src/syscalls.o
- .debug_line    0x000050ca      0x610 src/system_stm32f10x.o
- .debug_line    0x000056da       0x7e startup/startup_stm32f10x_md.o
+ .debug_line    0x00003bfb      0x8a5 src/main.o
+ .debug_line    0x000044a0      0x649 src/read_RTC.o
+ .debug_line    0x00004ae9      0x5df src/syscalls.o
+ .debug_line    0x000050c8      0x610 src/system_stm32f10x.o
+ .debug_line    0x000056d8       0x7e startup/startup_stm32f10x_md.o
 
-.debug_str      0x00000000    0x576c0
+.debug_str      0x00000000    0x57738
  .debug_str     0x00000000    0x4f190 StdPeriph_Driver/src/misc.o
                               0x4f309 (size before relaxing)
  .debug_str     0x0004f190      0x5c0 StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -4770,15 +4770,15 @@ OUTPUT(Clock_02_HH_display.elf elf32-littlearm)
                               0x4f98b (size before relaxing)
  .debug_str     0x00051ef2       0x5f src/UART.o
                               0x4f2a9 (size before relaxing)
- .debug_str     0x00051f51     0x441a src/main.o
-                              0x53a7d (size before relaxing)
- .debug_str     0x0005636b       0x95 src/read_RTC.o
-                              0x4f397 (size before relaxing)
- .debug_str     0x00056400     0x1201 src/syscalls.o
+ .debug_str     0x00051f51     0x4482 src/main.o
+                              0x53ae5 (size before relaxing)
+ .debug_str     0x000563d3       0xa5 src/read_RTC.o
+                              0x4f3a9 (size before relaxing)
+ .debug_str     0x00056478     0x1201 src/syscalls.o
                                0x857a (size before relaxing)
- .debug_str     0x00057601       0x8f src/system_stm32f10x.o
+ .debug_str     0x00057679       0x8f src/system_stm32f10x.o
                               0x4f1f0 (size before relaxing)
- .debug_str     0x00057690       0x30 startup/startup_stm32f10x_md.o
+ .debug_str     0x00057708       0x30 startup/startup_stm32f10x_md.o
                                  0x66 (size before relaxing)
 
 .comment        0x00000000       0x7f

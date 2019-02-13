@@ -17,33 +17,33 @@ uint32_t SysTick_Config_Mod(uint32_t SysTick_CLKSource, uint32_t Ticks);
 
 uint16_t delay = 24;    //this value gives 25,48us
 uint16_t strob = 7306;
-uint16_t SysTick1ms = 0;
-uint8_t SysTick100ms = 0;
+uint16_t sysTick1Ms = 0;
+uint8_t sysTick100Ms = 0;
 uint32_t step = 0;
-uint16_t FullSpin;
-uint8_t Task100ms = 0;    //0-ready to do; 1-done
-uint8_t Task1ms = 0;    //0-ready to do; 1-done
-uint8_t NewSpin = 0;    //0-end spin detection
+uint16_t fullSpin;
+uint8_t task100ms = 0;    //0-ready to do; 1-done
+uint8_t task1ms = 0;    //0-ready to do; 1-done
+uint8_t newSpin = 0;    //0-end spin detection
 
 //default displayed hour after reset
 
-uint8_t h_decade = 0;    //H10
-uint8_t h_unit = 0;    //H1
-uint8_t m_decade = 0;    //M10
-uint8_t m_unit = 0;    //M1
-uint8_t s_decade = 0;    //S10
-uint8_t s_unit = 0;    //S1
+uint8_t hourDecade = 0;    //hour10
+uint8_t hourUnit = 0;    //hour1
+uint8_t minuteDecade = 0;    //minute10
+uint8_t minuteUnit = 0;    //minute1
+uint8_t secondDecade = 0;    //second10
+uint8_t secondUnit = 0;    //second1
 
-char colon_toggle = 0;    //respond for symbol ":"
+char colonToggle = 0;    //respond for symbol ":"
 
-uint16_t H10 = 9133;
-uint16_t H1 = 8220;
-uint16_t HH = 1142;
-uint16_t M10 = 6850;
-uint16_t M1 = 5937;
-uint16_t MM = 9818;
-uint16_t S10 = 4567;
-uint16_t S1 = 3653;
+uint16_t hour10 = 9133;
+uint16_t hour1 = 8220;
+uint16_t colonHoursMinutes = 1142;
+uint16_t minute10 = 6850;
+uint16_t minute1 = 5937;
+uint16_t colonMinutesSeconds = 9818;
+uint16_t second10 = 4567;
+uint16_t second1 = 3653;
 
 int main(void)
 {
@@ -135,49 +135,49 @@ int main(void)
   //Timer_3 channel 1 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = H10;    //H10 pulses
+  octim.TIM_Pulse = hour10;    //hour10 pulses
   TIM_OC1Init(TIM3, &octim);   //Channel 1 initialization
 
   //Timer_3 channel 2 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = H1;    //H1 pulses
+  octim.TIM_Pulse = hour1;    //hour1 pulses
   TIM_OC2Init(TIM3, &octim);   //Channel 2 initialization
 
   //Timer_3 channel 3 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = HH;    //HH pulses
+  octim.TIM_Pulse = colonHoursMinutes;    //colonHoursMinutes pulses
   TIM_OC3Init(TIM3, &octim);   //Channel 3 initialization
 
   //Timer_3 channel 4 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = M10;    //M10 pulses
+  octim.TIM_Pulse = minute10;    //minute10 pulses
   TIM_OC4Init(TIM3, &octim);   //Channel 4 initialization
 
   //Timer_4 channel 1 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = M1;    //M1 pulses
+  octim.TIM_Pulse = minute1;    //minute1 pulses
   TIM_OC1Init(TIM4, &octim);   //Channel 1 initialization
 
   //Timer_4 channel 2 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = MM;    //MM pulses
+  octim.TIM_Pulse = colonMinutesSeconds;    //colonMinutesSeconds pulses
   TIM_OC2Init(TIM4, &octim);   //Channel 2 initialization
 
   //Timer_4 channel 3 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = S10;    //S10 pulses
+  octim.TIM_Pulse = second10;    //second10 pulses
   TIM_OC3Init(TIM4, &octim);   //Channel 3 initialization
 
   //Timer_4 channel 4 config
   octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
   octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable output
-  octim.TIM_Pulse = S1;    //S1 pulses
+  octim.TIM_Pulse = second1;    //second1 pulses
   TIM_OC4Init(TIM4, &octim);   //Channel 4 initialization
 
   TIM_ITConfig(TIM2, TIM_IT_CC2, ENABLE);
@@ -201,72 +201,72 @@ int main(void)
   while(1)
   {
 
-    if (SysTick100ms == 0 && Task100ms == 0)    //every seconds
+    if (sysTick100Ms == 0 && task100ms == 0)    //every seconds
     {
-      if ((s_decade == 5) && (s_unit == 10))    //If seconds = 60
+      if ((secondDecade == 5) && (secondUnit == 10))    //If seconds = 60
       {
-        s_unit = 0;
-        s_decade = 0;
-        m_unit++;    //increment minutes units
+        secondUnit = 0;
+        secondDecade = 0;
+        minuteUnit++;    //increment minutes units
       }
 
-      if (s_unit == 10)    //If seconds = 10
+      if (secondUnit == 10)    //If seconds = 10
       {
-        s_unit = 0;
-        s_decade++;          //increment seconds decade
+        secondUnit = 0;
+        secondDecade++;          //increment seconds decade
       }
 
-      if ((m_decade == 5) && (m_unit == 10))    //If minutes = 60
+      if ((minuteDecade == 5) && (minuteUnit == 10))    //If minutes = 60
       {
-        m_unit = 0;
-        m_decade = 0;
-        h_unit++;    //increment hours units
+        minuteUnit = 0;
+        minuteDecade = 0;
+        hourUnit++;    //increment hours units
       }
 
-      if (m_unit == 10)    //If minutes = 10
+      if (minuteUnit == 10)    //If minutes = 10
       {
-        m_unit = 0;
-        m_decade++;    //increment minutes decade
+        minuteUnit = 0;
+        minuteDecade++;    //increment minutes decade
       }
 
-      if ((h_decade == 2) && (h_unit == 4))    //if hours = 24 reset decade and unit hours
+      if ((hourDecade == 2) && (hourUnit == 4))    //if hours = 24 reset decade and unit hours
       {
-        h_unit = 0;
-        h_decade = 0;
+        hourUnit = 0;
+        hourDecade = 0;
       }
 
-      if (h_unit == 10)    //If hours = 10
+      if (hourUnit == 10)    //If hours = 10
       {
-        h_unit = 0;
-        h_decade++;    //increment hours decade
+        hourUnit = 0;
+        hourDecade++;    //increment hours decade
       }
-      if (colon_toggle == 0)
+      if (colonToggle == 0)
         {
-          colon_toggle++;
+          colonToggle++;
         }
         else
         {
-          colon_toggle = 0;
+          colonToggle = 0;
         }
-      Task100ms = 1;
+      task100ms = 1;
     }
 
-    if (NewSpin == 0)    //every each finished rotate
+    if (newSpin == 0)    //every each finished rotate
     {
-      switch (h_decade){    //hours decade
+      switch (hourDecade){    //hours decade
       case 0:
       {
-        H10 = FullSpin * 10 / 12;
+        hour10 = fullSpin * 10 / 12;
         break;
       }
       case 1:
       {
-        H10 = FullSpin * 11 / 12;
+        hour10 = fullSpin * 11 / 12;
         break;
       }
       case 2:
       {
-        H10 = 0;
+        hour10 = 0;
         break;
       }
       default:
@@ -275,55 +275,55 @@ int main(void)
       }
       }
 
-      switch (h_unit){    //hours units
+      switch (hourUnit){    //hours units
       case 0:
       {
-        H1 = FullSpin * 9 / 12;
+        hour1 = fullSpin * 9 / 12;
         break;
       }
       case 1:
       {
-        H1 = FullSpin * 10 / 12;
+        hour1 = fullSpin * 10 / 12;
         break;
       }
       case 2:
       {
-        H1 = FullSpin * 11 / 12;
+        hour1 = fullSpin * 11 / 12;
         break;
       }
       case 3:
       {
-        H1 = 0;
+        hour1 = 0;
         break;
       }
       case 4:
       {
-        H1 = FullSpin * 1 / 12;
+        hour1 = fullSpin * 1 / 12;
         break;
       }
       case 5:
       {
-        H1 = FullSpin * 3 / 12;
+        hour1 = fullSpin * 3 / 12;
         break;
       }
       case 6:
       {
-        H1 = FullSpin * 4 / 12;
+        hour1 = fullSpin * 4 / 12;
         break;
       }
       case 7:
       {
-        H1 = FullSpin * 5 / 12;
+        hour1 = fullSpin * 5 / 12;
         break;
       }
       case 8:
       {
-        H1 = FullSpin * 6 / 12;
+        hour1 = fullSpin * 6 / 12;
         break;
       }
       case 9:
       {
-        H1 = FullSpin * 7 / 12;
+        hour1 = fullSpin * 7 / 12;
         break;
       }
       default:
@@ -332,55 +332,55 @@ int main(void)
       }
       }
 
-      switch (m_decade){    //minutes decades
+      switch (minuteDecade){    //minutes decades
       case 0:
       {
-        M10 = FullSpin * 15 / 24;
+        minute10 = fullSpin * 15 / 24;
         break;
       }
       case 1:
       {
-        M10 = FullSpin * 17 / 24;
+        minute10 = fullSpin * 17 / 24;
         break;
       }
       case 2:
       {
-        M10 = FullSpin * 19 / 24;
+        minute10 = fullSpin * 19 / 24;
         break;
       }
       case 3:
       {
-        M10 = FullSpin * 21 / 24;
+        minute10 = fullSpin * 21 / 24;
         break;
       }
       case 4:
       {
-        M10 = FullSpin * 23 / 24;
+        minute10 = fullSpin * 23 / 24;
         break;
       }
       case 5:
       {
-        M10 = FullSpin * 3 / 24;
+        minute10 = fullSpin * 3 / 24;
         break;
       }
       case 6:
       {
-        M10 = FullSpin * 5 / 24;
+        minute10 = fullSpin * 5 / 24;
         break;
       }
       case 7:
       {
-        M10 = FullSpin * 71 / 24;
+        minute10 = fullSpin * 71 / 24;
         break;
       }
       case 8:
       {
-        M10 = FullSpin * 9 / 24;
+        minute10 = fullSpin * 9 / 24;
         break;
       }
       case 9:
       {
-        M10 = FullSpin * 11 / 24;
+        minute10 = fullSpin * 11 / 24;
         break;
       }
       default:
@@ -389,55 +389,55 @@ int main(void)
       }
       }
 
-      switch (m_unit){    //minutes units
+      switch (minuteUnit){    //minutes units
       case 0:
       {
-        M1 = FullSpin * 13 / 24;
+        minute1 = fullSpin * 13 / 24;
         break;
       }
       case 1:
       {
-        M1 = FullSpin * 15 / 24;
+        minute1 = fullSpin * 15 / 24;
         break;
       }
       case 2:
       {
-        M1 = FullSpin * 17 / 24;
+        minute1 = fullSpin * 17 / 24;
         break;
       }
       case 3:
       {
-        M1 = FullSpin * 19 / 24;
+        minute1 = fullSpin * 19 / 24;
         break;
       }
       case 4:
       {
-        M1 = FullSpin * 21 / 24;
+        minute1 = fullSpin * 21 / 24;
         break;
       }
       case 5:
       {
-        M1 = FullSpin * 1 / 24;
+        minute1 = fullSpin * 1 / 24;
         break;
       }
       case 6:
       {
-        M1 = FullSpin * 3 / 24;
+        minute1 = fullSpin * 3 / 24;
         break;
       }
       case 7:
       {
-        M1 = FullSpin * 5 / 24;
+        minute1 = fullSpin * 5 / 24;
         break;
       }
       case 8:
       {
-        M1 = FullSpin * 7 / 24;
+        minute1 = fullSpin * 7 / 24;
         break;
       }
       case 9:
       {
-        M1 = FullSpin * 9 / 24;
+        minute1 = fullSpin * 9 / 24;
         break;
       }
       default:
@@ -446,55 +446,55 @@ int main(void)
       }
       }
 
-      switch (s_decade){    //seconds decades
+      switch (secondDecade){    //seconds decades
       case 0:
       {
-        S10 = FullSpin * 5 / 12;
+        second10 = fullSpin * 5 / 12;
         break;
       }
       case 1:
       {
-        S10 = FullSpin * 6 / 12;
+        second10 = fullSpin * 6 / 12;
         break;
       }
       case 2:
       {
-        S10 = FullSpin * 7 / 12;
+        second10 = fullSpin * 7 / 12;
         break;
       }
       case 3:
       {
-        S10 = FullSpin *8 / 12;
+        second10 = fullSpin *8 / 12;
         break;
       }
       case 4:
       {
-        S10 = FullSpin * 9 / 12;
+        second10 = fullSpin * 9 / 12;
         break;
       }
       case 5:
       {
-        S10 = FullSpin * 11 / 12;
+        second10 = fullSpin * 11 / 12;
         break;
       }
       case 6:
       {
-        S10 = 0;
+        second10 = 0;
         break;
       }
       case 7:
       {
-        S10 = FullSpin * 1 / 12;
+        second10 = fullSpin * 1 / 12;
         break;
       }
       case 8:
       {
-        S10 = FullSpin * 2 / 12;
+        second10 = fullSpin * 2 / 12;
         break;
       }
       case 9:
       {
-        S10 = FullSpin * 3 / 12;
+        second10 = fullSpin * 3 / 12;
         break;
       }
       default:
@@ -503,55 +503,55 @@ int main(void)
       }
       }
 
-      switch (s_unit){    //seconds units
+      switch (secondUnit){    //seconds units
       case 0:
       {
-        S1 = FullSpin * 4 / 12;
+        second1 = fullSpin * 4 / 12;
         break;
       }
       case 1:
       {
-        S1 = FullSpin * 5 / 12;
+        second1 = fullSpin * 5 / 12;
         break;
       }
       case 2:
       {
-        S1 = FullSpin * 6 / 12;
+        second1 = fullSpin * 6 / 12;
         break;
       }
       case 3:
       {
-        S1 = FullSpin * 7 / 12;
+        second1 = fullSpin * 7 / 12;
         break;
       }
       case 4:
       {
-        S1 = FullSpin * 8 / 12;
+        second1 = fullSpin * 8 / 12;
         break;
       }
       case 5:
       {
-        S1 = FullSpin * 10 / 12;
+        second1 = fullSpin * 10 / 12;
         break;
       }
       case 6:
       {
-        S1 = FullSpin * 11 / 12;
+        second1 = fullSpin * 11 / 12;
         break;
       }
       case 7:
       {
-        S1 = 0;
+        second1 = 0;
         break;
       }
       case 8:
       {
-        S1 = FullSpin * 1 / 12;
+        second1 = fullSpin * 1 / 12;
         break;
       }
       case 9:
       {
-        S1 = FullSpin * 2 / 12;
+        second1 = fullSpin * 2 / 12;
         break;
       }
       default:
@@ -560,61 +560,61 @@ int main(void)
       }
       }
 
-      HH = FullSpin * 5 /48;
-      MM = FullSpin * 19 /48;
+      colonHoursMinutes = fullSpin * 5 /48;
+      colonMinutesSeconds = fullSpin * 19 /48;
 
       TIM_OCInitTypeDef octim;
 
       //Timer_3 1st channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = H10;    //H10 pulses
+      octim.TIM_Pulse = hour10;    //hour10 pulses
       TIM_OC1Init(TIM3, &octim);   //1st channel initialization
 
       //Timer_3 2nd channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = H1;    //H1 pulses
+      octim.TIM_Pulse = hour1;    //hour1 pulses
       TIM_OC2Init(TIM3, &octim);    //2nd channel initialization
 
       //Timer_3 3rd channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //tryb pracy kanalu
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = HH;  //HH pulses
+      octim.TIM_Pulse = colonHoursMinutes;  //colonHoursMinutes pulses
       TIM_OC3Init(TIM3, &octim);   //3rd channel initialization
 
       ////Timer_3 4th channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = M10;    //M10 pulses
+      octim.TIM_Pulse = minute10;    //minute10 pulses
       TIM_OC4Init(TIM3, &octim);   //4th channel initialization
 
       //Timer_4 1st channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = M1;  //M1 pulses
+      octim.TIM_Pulse = minute1;  //minute1 pulses
       TIM_OC1Init(TIM4, &octim);    //1st channel initialization
 
       //Timer_4 2nd channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = MM;  //MM pulses
+      octim.TIM_Pulse = colonMinutesSeconds;  //colonMinutesSeconds pulses
       TIM_OC2Init(TIM4, &octim);    //2nd channel initialization
 
 
       //Timer_4 3rd channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = S10;    //HH pulses
+      octim.TIM_Pulse = second10;    //colonHoursMinutes pulses
       TIM_OC3Init(TIM4, &octim);    //3rd channel initialization
 
       //Timer_4 4th channel config
       octim.TIM_OCMode = TIM_OCMode_Timing;    //mode
       octim.TIM_OutputState = TIM_OutputState_Enable;    //Enable outputs
-      octim.TIM_Pulse = S1;  //S10 pulses
+      octim.TIM_Pulse = second1;  //second10 pulses
       TIM_OC4Init(TIM4, &octim);   //4th channel initialization
 
-      NewSpin = 1;
+      newSpin = 1;
 
     }
   }
@@ -623,29 +623,21 @@ int main(void)
 
 void SysTick_Handler(void)
 {
-  SysTick1ms++;
-  if (SysTick1ms == 100)
+  sysTick1Ms++;
+  if (sysTick1Ms == 100)
   {
-    SysTick100ms++;
-    SysTick1ms = 0;
-    Task1ms = 0;
+    sysTick100Ms++;
+    sysTick1Ms = 0;
+    task1ms = 0;
   }
-  if (SysTick100ms == 10)
+  if (sysTick100Ms == 10)
   {
-    s_unit++;
-    SysTick100ms = 0;
-    Task100ms = 0;
+    secondUnit++;
+    sysTick100Ms = 0;
+    task100ms = 0;
     GPIO_WriteBit(GPIOA, GPIO_Pin_5, (BitAction)(1-GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_5)));
   }
-/*
 
-
-
-
-  printf ("Time: %d%d:%d%d:%d%d\r\n", h_decade, h_unit, m_decade, m_unit, s_decade, s_unit);
-
-  s_unit++;
-*/
 }
 
 uint32_t  SysTick_Config_Mod(uint32_t SysTick_CLKSource, uint32_t Ticks)
@@ -683,12 +675,12 @@ void TIM2_IRQHandler(void)
   {
     TIM_ClearITPendingBit(TIM2, TIM_IT_CC2);    //reset interrupt flag
 
-    FullSpin = TIM_GetCapture2(TIM2);    //Read register CCR value for 2nd channel
+    fullSpin = TIM_GetCapture2(TIM2);    //Read register CCR value for 2nd channel
     TIM_SetCounter(TIM2, 0);    //Timer_2 reset
     TIM_SetCounter(TIM3, 0);    //Timer_3 reset
     TIM_SetCounter(TIM4, 0);    //Timer_4 reset
     GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7);
-    NewSpin = 0;
+    newSpin = 0;
   }
 }
 
@@ -708,7 +700,7 @@ void TIM3_IRQHandler(void)
   }
   if (TIM_GetITStatus(TIM3, TIM_IT_CC3) != RESET)  {    //value from CC3 is achieved
     TIM_ClearITPendingBit(TIM3, TIM_IT_CC3);
-    if (colon_toggle == 1)
+    if (colonToggle == 1)
     {
       GPIO_SetBits(GPIOC, GPIO_Pin_2);
     }
@@ -731,7 +723,7 @@ void TIM4_IRQHandler(void)
   }
   if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)  {    //value from CC2 is achieved
     TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
-    if (colon_toggle == 1)
+    if (colonToggle == 1)
     {
       GPIO_SetBits(GPIOC, GPIO_Pin_5);
     }

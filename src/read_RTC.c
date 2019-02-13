@@ -7,12 +7,12 @@
 
 #include "stm32f10x.h"
 
-extern uint8_t h_decade;
-extern uint8_t h_unit;
-extern uint8_t m_decade;
-extern uint8_t m_unit;
-extern uint8_t s_decade;
-extern uint8_t s_unit;
+extern uint8_t hourDecade;
+extern uint8_t hourUnit;
+extern uint8_t minuteDecade;
+extern uint8_t minuteUnit;
+extern uint8_t secondDecade;
+extern uint8_t secondUnit;
 
 void init_I2C_for_RTC(void)
 {
@@ -94,73 +94,73 @@ void read_RTC(void)
 
   /* SECONDS */
 
-  uint8_t tensec = 0x70 & data0;
-  tensec >>= 4;
+  uint8_t tenSec = 0x70 & data0;
+  tenSec >>= 4;
   uint8_t sec = 0x0F & data0;
 
-  s_decade = tensec;
-  s_unit = sec;
+  secondDecade = tenSec;
+  secondUnit = sec;
 
   /* MINUTES */
 
-  uint8_t tenmin = 0x70 & data1;
-  tenmin >>= 4;
+  uint8_t tenMin = 0x70 & data1;
+  tenMin >>= 4;
   uint8_t min = 0x0F & data1;
 
-  m_decade = tenmin;
-  m_unit = min;
+  minuteDecade = tenMin;
+  minuteUnit = min;
 
   /* HOURS */
 
   printf("DATA2 RAW %d\r\n", data2);
 
-  uint8_t type_of_clock = 0X40 & data2;
-  type_of_clock >>= 3;
+  uint8_t typeOfClock = 0X40 & data2;
+  typeOfClock >>= 3;
 
-  uint8_t tenhrs;
-  h_decade = tenhrs;
+  uint8_t tenHrs;
+  hourDecade = tenHrs;
 
-  int8_t ampm;
+  int8_t amPm;
 
   /* DAY OF MONTH */
 
-  uint8_t tendays = 0x50 & data4;
-  tendays >>= 4;
+  uint8_t tenDays = 0x50 & data4;
+  tenDays >>= 4;
   uint8_t days = 0x0F & data4;
-  //printf("Day: %d%d \r\n", tendays, days);
+  //printf("Day: %d%d \r\n", tenDays, days);
 
   /* MONTH */
-  uint8_t tenmonths = 0x10 & data5;
-  tenmonths >>= 4;
+  uint8_t tenMonths = 0x10 & data5;
+  tenMonths >>= 4;
   uint8_t months = 0x0F & data5;
 
   /* YEAR */
-  uint8_t tenyears = 0xF0 & data6;
-  tenyears >>= 4;
+  uint8_t tenYears = 0xF0 & data6;
+  tenYears >>= 4;
   uint8_t years = 0x0F & data6;
 
-  if (type_of_clock == ENABLE) // 12h clock AM and PM
+  if (typeOfClock == ENABLE) // 12h clock AM and PM
   {
-    tenhrs = 0x10 & data2;
-    tenhrs >>= 4;
+    tenHrs = 0x10 & data2;
+    tenHrs >>= 4;
   }
   else
   {
-    tenhrs = 0x30 & data2;
-    tenhrs >>= 4;
+    tenHrs = 0x30 & data2;
+    tenHrs >>= 4;
   }
 
   uint8_t hrs = 0x0F & data2;
 
-  h_decade = tenhrs;
-  h_unit = hrs;
+  hourDecade = tenHrs;
+  hourUnit = hrs;
 
-  printf("Time: %d%d:%d%d:%d%d", tenhrs, hrs, tenmin, min, tensec, sec);
-  if (type_of_clock == ENABLE) // 12h clock AM and PM
+  printf("Time: %d%d:%d%d:%d%d", tenHrs, hrs, tenMin, min, tenSec, sec);
+  if (typeOfClock == ENABLE) // 12h clock AM and PM
   {
-    ampm = 0x20 & data2;
-    ampm >>= 4;
-    if (ampm == DISABLE) // means AM
+   amPm = 0x20 & data2;
+   amPm >>= 4;
+    if (amPm == DISABLE) // means AM
     {
       printf(" AM\r\n");
     }
@@ -171,7 +171,7 @@ void read_RTC(void)
   }
 
   printf("\r\n");
-  printf("Data: %d%d.%d%d.%d%d\r\n", tendays, days, tenmonths, months, tenyears, years);
+  printf("Data: %d%d.%d%d.%d%d\r\n", tenDays, days, tenMonths, months, tenYears, years);
 }
 
 
