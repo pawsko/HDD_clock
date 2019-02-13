@@ -23,6 +23,7 @@ uint32_t step = 0;
 uint16_t FullSpin;
 uint8_t Task100ms = 0;    //0-ready to do; 1-done
 uint8_t Task1ms = 0;    //0-ready to do; 1-done
+uint8_t NewSpin = 0;    //0-end spin detection
 
 //default displayed hour after reset
 
@@ -241,20 +242,16 @@ int main(void)
       }
       if (colon_toggle == 0)
         {
-          //TIM_ITConfig(TIM4, TIM_IT_CC2, DISABLE);   //Disable interrupt from Timer 4 from Clock Capture 2
-          //TIM_ITConfig(TIM3, TIM_IT_CC3, DISABLE);   //Disable interrupt from Timer 3 from Clock Capture 3
           colon_toggle++;
         }
         else
         {
-          //TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);   //Enable interrupt from Timer 4 from Clock Capture 2
-          //TIM_ITConfig(TIM3, TIM_IT_CC3, ENABLE);   //Enable interrupt from Timer 3 from Clock Capture 3
           colon_toggle = 0;
         }
       Task100ms = 1;
     }
 
-    if (SysTick1ms == 0 && Task1ms == 0)    //every 100ms
+    if (NewSpin == 0)    //every each finished rotate
     {
       switch (h_decade){    //hours decade
       case 0:
@@ -617,6 +614,8 @@ int main(void)
       octim.TIM_Pulse = S1;  //S10 pulses
       TIM_OC4Init(TIM4, &octim);   //4th channel initialization
 
+      NewSpin = 1;
+
     }
   }
 
@@ -689,6 +688,7 @@ void TIM2_IRQHandler(void)
     TIM_SetCounter(TIM3, 0);    //Timer_3 reset
     TIM_SetCounter(TIM4, 0);    //Timer_4 reset
     GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7);
+    NewSpin = 0;
   }
 }
 
