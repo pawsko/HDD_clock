@@ -7,12 +7,14 @@
 
 #include "stm32f10x.h"
 
+/*
 extern uint8_t hourDecade;
 extern uint8_t hourUnit;
 extern uint8_t minuteDecade;
 extern uint8_t minuteUnit;
 extern uint8_t secondDecade;
 extern uint8_t secondUnit;
+*/
 
 void initI2cForRtc(void)
 {
@@ -40,12 +42,15 @@ void initI2cForRtc(void)
 
 }
 
-void readRtc(void)
+void readRtc(uint8_t address, uint8_t lenght, uint8_t *ptr)
 {
+  uint8_t buff[lenght];
+  ptr = &buff[0];
+
   I2C_GenerateSTART(I2C1, ENABLE);    //Start
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT) != SUCCESS);
 
-  I2C_Send7bitAddress(I2C1, 0xD0, I2C_Direction_Transmitter);    //Write to address 0xD0
+  I2C_Send7bitAddress(I2C1, address, I2C_Direction_Transmitter);    //Write to address 0xD0
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED) != SUCCESS);
 
   I2C_SendData(I2C1, 0x00);    //Set address to 0x00
@@ -55,22 +60,30 @@ void readRtc(void)
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT) != SUCCESS);    //Start
 
   I2C_AcknowledgeConfig(I2C1, ENABLE);
-  I2C_Send7bitAddress(I2C1, 0xD0, I2C_Direction_Receiver);    //read first cell
+  I2C_Send7bitAddress(I2C1, address, I2C_Direction_Receiver);    //read first cell
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED) != SUCCESS);
 
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data0 = I2C_ReceiveData(I2C1);
+  for (char  i = 0; i < lenght; i++)
+  {
+    while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
+    *(ptr++) = I2C_ReceiveData(I2C1);
 
-  I2C_AcknowledgeConfig(I2C1, ENABLE);
+
+    I2C_AcknowledgeConfig(I2C1, ENABLE);
+  }
+  I2C_AcknowledgeConfig(I2C1, DISABLE);
+  I2C_GenerateSTOP(I2C1, ENABLE);
   while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
+
+  /*while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
   uint8_t data1 = I2C_ReceiveData(I2C1);
 
   I2C_AcknowledgeConfig(I2C1, ENABLE);
   while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data2 = I2C_ReceiveData(I2C1);
+  uint8_t data2 = I2C_ReceiveData(I2C1);*/
 
 /* DAY OF WEEK */
-  I2C_AcknowledgeConfig(I2C1, ENABLE);
+/*  I2C_AcknowledgeConfig(I2C1, ENABLE);
   while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
   uint8_t data3 = I2C_ReceiveData(I2C1);
 
@@ -91,28 +104,28 @@ void readRtc(void)
   while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
   uint8_t data7 = I2C_ReceiveData(I2C1);
   //I2C_AcknowledgeConfig(I2C1, ENABLE);
-
+*/
   /* SECONDS */
 
-  uint8_t tenSec = 0x70 & data0;
+/*  uint8_t tenSec = 0x70 & data0;
   tenSec >>= 4;
   uint8_t sec = 0x0F & data0;
 
   secondDecade = tenSec;
   secondUnit = sec;
-
+*/
   /* MINUTES */
 
-  uint8_t tenMin = 0x70 & data1;
+/*  uint8_t tenMin = 0x70 & data1;
   tenMin >>= 4;
   uint8_t min = 0x0F & data1;
 
   minuteDecade = tenMin;
   minuteUnit = min;
-
+*/
   /* HOURS */
 
-  printf("DATA2 RAW %d\r\n", data2);
+/*  printf("DATA2 RAW %d\r\n", data2);
 
   uint8_t typeOfClock = 0X40 & data2;
   typeOfClock >>= 3;
@@ -121,21 +134,21 @@ void readRtc(void)
   hourDecade = tenHrs;
 
   int8_t amPm;
-
+*/
   /* DAY OF MONTH */
 
-  uint8_t tenDays = 0x50 & data4;
+/*  uint8_t tenDays = 0x50 & data4;
   tenDays >>= 4;
   uint8_t days = 0x0F & data4;
   //printf("Day: %d%d \r\n", tenDays, days);
-
+*/
   /* MONTH */
-  uint8_t tenMonths = 0x10 & data5;
+/*  uint8_t tenMonths = 0x10 & data5;
   tenMonths >>= 4;
   uint8_t months = 0x0F & data5;
-
+*/
   /* YEAR */
-  uint8_t tenYears = 0xF0 & data6;
+/*  uint8_t tenYears = 0xF0 & data6;
   tenYears >>= 4;
   uint8_t years = 0x0F & data6;
 
@@ -172,6 +185,7 @@ void readRtc(void)
 
   printf("\r\n");
   printf("Data: %d%d.%d%d.%d%d\r\n", tenDays, days, tenMonths, months, tenYears, years);
+*/
 }
 
 

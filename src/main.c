@@ -24,6 +24,7 @@ uint16_t fullSpin;
 uint8_t task100ms = 0;    //0-ready to do; 1-done
 uint8_t task1ms = 0;    //0-ready to do; 1-done
 uint8_t newSpin = 0;    //0-end spin detection
+uint8_t buff[];
 
 //default displayed hour after reset
 
@@ -49,7 +50,7 @@ int main(void)
 {
   initUart();
   initI2cForRtc();
-  readRtc();
+  readRtc(0xD0, 0x08, buff);
 
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);    //start USART
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM3 | RCC_APB1Periph_TIM4, ENABLE);    //TIMER 2, 3 i 4 started
