@@ -7,14 +7,14 @@
 
 #include "stm32f10x.h"
 
-/*
+
 extern uint8_t hourDecade;
 extern uint8_t hourUnit;
 extern uint8_t minuteDecade;
 extern uint8_t minuteUnit;
 extern uint8_t secondDecade;
 extern uint8_t secondUnit;
-*/
+
 
 void initI2cForRtc(void)
 {
@@ -42,10 +42,8 @@ void initI2cForRtc(void)
 
 }
 
-void readRtc(uint8_t address, uint8_t lenght, uint8_t *ptr)
+void readRtc(uint8_t address, uint8_t lenght, uint8_t *buff)
 {
-  uint8_t buff[lenght];
-  ptr = &buff[0];
 
   I2C_GenerateSTART(I2C1, ENABLE);    //Start
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT) != SUCCESS);
@@ -63,10 +61,10 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *ptr)
   I2C_Send7bitAddress(I2C1, address, I2C_Direction_Receiver);    //read first cell
   while (I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED) != SUCCESS);
 
-  for (char  i = 0; i < lenght; i++)
+  for (uint8_t  i = 0; i < lenght; i++)
   {
     while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-    *(ptr++) = I2C_ReceiveData(I2C1);
+    buff[i] = I2C_ReceiveData(I2C1);
 
 
     I2C_AcknowledgeConfig(I2C1, ENABLE);
@@ -107,63 +105,63 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *ptr)
 */
   /* SECONDS */
 
-/*  uint8_t tenSec = 0x70 & data0;
+  uint8_t tenSec = 0x70 & buff[0];
   tenSec >>= 4;
-  uint8_t sec = 0x0F & data0;
+  uint8_t sec = 0x0F & buff[0];
 
   secondDecade = tenSec;
   secondUnit = sec;
-*/
+
   /* MINUTES */
 
-/*  uint8_t tenMin = 0x70 & data1;
+  uint8_t tenMin = 0x70 & buff[1];
   tenMin >>= 4;
-  uint8_t min = 0x0F & data1;
+  uint8_t min = 0x0F & buff[1];
 
   minuteDecade = tenMin;
   minuteUnit = min;
-*/
+
   /* HOURS */
 
-/*  printf("DATA2 RAW %d\r\n", data2);
+  printf("DATA2 RAW %d\r\n", buff[2]);
 
-  uint8_t typeOfClock = 0X40 & data2;
+  uint8_t typeOfClock = 0X40 & buff[2];
   typeOfClock >>= 3;
 
   uint8_t tenHrs;
   hourDecade = tenHrs;
 
   int8_t amPm;
-*/
+
   /* DAY OF MONTH */
 
-/*  uint8_t tenDays = 0x50 & data4;
+  uint8_t tenDays = 0x50 & buff[4];
   tenDays >>= 4;
-  uint8_t days = 0x0F & data4;
+  uint8_t days = 0x0F & buff[4];
   //printf("Day: %d%d \r\n", tenDays, days);
-*/
+
   /* MONTH */
-/*  uint8_t tenMonths = 0x10 & data5;
+  uint8_t tenMonths = 0x10 & buff[5];
   tenMonths >>= 4;
-  uint8_t months = 0x0F & data5;
-*/
+  uint8_t months = 0x0F & buff[5];
+
   /* YEAR */
-/*  uint8_t tenYears = 0xF0 & data6;
+  uint8_t tenYears = 0xF0 & buff[6];
   tenYears >>= 4;
-  uint8_t years = 0x0F & data6;
+  uint8_t years = 0x0F &buff[6];
 
   if (typeOfClock == ENABLE) // 12h clock AM and PM
   {
-    tenHrs = 0x10 & data2;
+    tenHrs = 0x10 & buff[2];
     tenHrs >>= 4;
   }
   else
   {
-    tenHrs = 0x30 & data2;
+    tenHrs = 0x30 & buff[2];
     tenHrs >>= 4;
   }
 
-  uint8_t hrs = 0x0F & data2;
+  uint8_t hrs = 0x0F & buff[2];
 
   hourDecade = tenHrs;
   hourUnit = hrs;
@@ -171,7 +169,7 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *ptr)
   printf("Time: %d%d:%d%d:%d%d", tenHrs, hrs, tenMin, min, tenSec, sec);
   if (typeOfClock == ENABLE) // 12h clock AM and PM
   {
-   amPm = 0x20 & data2;
+   amPm = 0x20 & buff[2];
    amPm >>= 4;
     if (amPm == DISABLE) // means AM
     {
@@ -185,7 +183,7 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *ptr)
 
   printf("\r\n");
   printf("Data: %d%d.%d%d.%d%d\r\n", tenDays, days, tenMonths, months, tenYears, years);
-*/
+
 }
 
 

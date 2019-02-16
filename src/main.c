@@ -24,7 +24,7 @@ uint16_t fullSpin;
 uint8_t task100ms = 0;    //0-ready to do; 1-done
 uint8_t task1ms = 0;    //0-ready to do; 1-done
 uint8_t newSpin = 0;    //0-end spin detection
-uint8_t buff[];
+uint8_t buff[8];
 
 //default displayed hour after reset
 
