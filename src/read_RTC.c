@@ -14,6 +14,17 @@ extern uint8_t minuteDecade;
 extern uint8_t minuteUnit;
 extern uint8_t secondDecade;
 extern uint8_t secondUnit;
+extern uint8_t buff[8];
+typedef struct
+{
+  uint8_t seconds;
+  uint8_t minutes;
+  uint8_t hours;
+  uint8_t days;
+  uint8_t months;
+  uint16_t years;
+  uint8_t typeOfClock;  //0- ; 1-
+} time_t;
 
 
 void initI2cForRtc(void)
@@ -39,7 +50,6 @@ void initI2cForRtc(void)
   i2c.I2C_ClockSpeed = 100000;
   I2C_Init(I2C1, &i2c);
   I2C_Cmd(I2C1, ENABLE);
-
 }
 
 void readRtc(uint8_t address, uint8_t lenght, uint8_t *buff)
@@ -186,4 +196,54 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *buff)
 
 }
 
+
+time_t readDateTime(void)
+{
+/* SECONDS */
+
+  uint8_t tenSec = 0x70 & buff[0];
+  tenSec >>= 4;
+  uint8_t sec = 0x0F & buff[0];
+
+  secondDecade = tenSec;
+  secondUnit = sec;
+  time_t.seconds = 10;
+  /* MINUTES */
+
+  uint8_t tenMin = 0x70 & buff[1];
+  tenMin >>= 4;
+  uint8_t min = 0x0F & buff[1];
+
+  minuteDecade = tenMin;
+  minuteUnit = min;
+
+  /* HOURS */
+
+  printf("DATA2 RAW %d\r\n", buff[2]);
+
+  uint8_t typeOfClock = 0X40 & buff[2];
+  typeOfClock >>= 3;
+
+  uint8_t tenHrs;
+  hourDecade = tenHrs;
+
+  int8_t amPm;
+
+  /* DAY OF MONTH */
+
+  uint8_t tenDays = 0x50 & buff[4];
+  tenDays >>= 4;
+  uint8_t days = 0x0F & buff[4];
+  //printf("Day: %d%d \r\n", tenDays, days);
+
+  /* MONTH */
+  uint8_t tenMonths = 0x10 & buff[5];
+  tenMonths >>= 4;
+  uint8_t months = 0x0F & buff[5];
+
+  /* YEAR */
+  uint8_t tenYears = 0xF0 & buff[6];
+  tenYears >>= 4;
+  uint8_t years = 0x0F &buff[6];
+}
 
