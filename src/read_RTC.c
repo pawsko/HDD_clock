@@ -52,6 +52,43 @@ void initI2cForRtc(void)
   I2C_Cmd(I2C1, ENABLE);
 }
 
+time_t readDateTime(void)
+{
+  time_t dt; // Structure created
+  uint8_t rawRtc[0x08]; // buffer for data from RTC
+
+  readRtc(0xD0, sizeof(rawRtc), rawRtc); // Read data
+
+  // seconds decade * 10  + seconds unit
+  dt.seconds = ((0x70 & rawRtc[0]) >> 4) * 10 + 0x0F & rawRtc[0];
+  // minutes decade * 10  + minutes unit
+  dt.minutes =  ((0x70 & rawRtc[1]) >> 4) * 10 + 0x0F & rawRtc[1];
+  // hours decade * 10 + hours unit
+
+  //Bit 6 means 12/24 hour mode
+  //           1 - 12hour mode -> bit 5 means AM/PM 0 - AM; 1 - PM
+  //           0 - 24hour mode -> bit 5 means second 10 hour bit (20-23 hours)
+  dt.typeOfClock = 0X40 & buff[2] >> 3;
+  if (dt.typeOfClock == 0)
+  {
+    dt.hours = ((0x30 & rawRtc[2] >> 4) * 10 + 0x0F & rawRtc[2]);
+  }
+  else
+  {
+    dt.hours = ((0x10 & rawRtc[2] >> 4) * 10 + 0x0F & rawRtc[2]);
+  }
+  // days decade * 10 + days unit
+  dt.days = ((0x30 & rawRtc[4] >> 4) * 10 + 0x0F & rawRtc[4]);
+  // months decade *10 + months unit
+  dt.months = ((0x10 & rawRtc[5] >> 4) * 10 + 0x0F & rawRtc[5]);
+  // years decade * 10 + years unit
+  dt.years = ((0xF0 & rawRtc[6] >> 4) * 10 + 0x0F & rawRtc[6]);
+
+  // If structure is filled return it
+  return dt;
+}
+
+
 void readRtc(uint8_t address, uint8_t lenght, uint8_t *buff)
 {
 
@@ -113,137 +150,6 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *buff)
   uint8_t data7 = I2C_ReceiveData(I2C1);
   //I2C_AcknowledgeConfig(I2C1, ENABLE);
 */
-  /* SECONDS */
 
-  uint8_t tenSec = 0x70 & buff[0];
-  tenSec >>= 4;
-  uint8_t sec = 0x0F & buff[0];
-
-  secondDecade = tenSec;
-  secondUnit = sec;
-
-  /* MINUTES */
-
-  uint8_t tenMin = 0x70 & buff[1];
-  tenMin >>= 4;
-  uint8_t min = 0x0F & buff[1];
-
-  minuteDecade = tenMin;
-  minuteUnit = min;
-
-  /* HOURS */
-
-  printf("DATA2 RAW %d\r\n", buff[2]);
-
-  uint8_t typeOfClock = 0X40 & buff[2];
-  typeOfClock >>= 3;
-
-  uint8_t tenHrs;
-  hourDecade = tenHrs;
-
-  int8_t amPm;
-
-  /* DAY OF MONTH */
-
-  uint8_t tenDays = 0x50 & buff[4];
-  tenDays >>= 4;
-  uint8_t days = 0x0F & buff[4];
-  //printf("Day: %d%d \r\n", tenDays, days);
-
-  /* MONTH */
-  uint8_t tenMonths = 0x10 & buff[5];
-  tenMonths >>= 4;
-  uint8_t months = 0x0F & buff[5];
-
-  /* YEAR */
-  uint8_t tenYears = 0xF0 & buff[6];
-  tenYears >>= 4;
-  uint8_t years = 0x0F &buff[6];
-
-  if (typeOfClock == ENABLE) // 12h clock AM and PM
-  {
-    tenHrs = 0x10 & buff[2];
-    tenHrs >>= 4;
-  }
-  else
-  {
-    tenHrs = 0x30 & buff[2];
-    tenHrs >>= 4;
-  }
-
-  uint8_t hrs = 0x0F & buff[2];
-
-  hourDecade = tenHrs;
-  hourUnit = hrs;
-
-  printf("Time: %d%d:%d%d:%d%d", tenHrs, hrs, tenMin, min, tenSec, sec);
-  if (typeOfClock == ENABLE) // 12h clock AM and PM
-  {
-   amPm = 0x20 & buff[2];
-   amPm >>= 4;
-    if (amPm == DISABLE) // means AM
-    {
-      printf(" AM\r\n");
-    }
-    else
-    {
-      printf(" PM\r\n");
-    }
-  }
-
-  printf("\r\n");
-  printf("Data: %d%d.%d%d.%d%d\r\n", tenDays, days, tenMonths, months, tenYears, years);
-
-}
-
-
-time_t readDateTime(void)
-{
-/* SECONDS */
-
-  uint8_t tenSec = 0x70 & buff[0];
-  tenSec >>= 4;
-  uint8_t sec = 0x0F & buff[0];
-
-  secondDecade = tenSec;
-  secondUnit = sec;
-  time_t.seconds = 10;
-  /* MINUTES */
-
-  uint8_t tenMin = 0x70 & buff[1];
-  tenMin >>= 4;
-  uint8_t min = 0x0F & buff[1];
-
-  minuteDecade = tenMin;
-  minuteUnit = min;
-
-  /* HOURS */
-
-  printf("DATA2 RAW %d\r\n", buff[2]);
-
-  uint8_t typeOfClock = 0X40 & buff[2];
-  typeOfClock >>= 3;
-
-  uint8_t tenHrs;
-  hourDecade = tenHrs;
-
-  int8_t amPm;
-
-  /* DAY OF MONTH */
-
-  uint8_t tenDays = 0x50 & buff[4];
-  tenDays >>= 4;
-  uint8_t days = 0x0F & buff[4];
-  //printf("Day: %d%d \r\n", tenDays, days);
-
-  /* MONTH */
-  uint8_t tenMonths = 0x10 & buff[5];
-  tenMonths >>= 4;
-  uint8_t months = 0x0F & buff[5];
-
-  /* YEAR */
-  uint8_t tenYears = 0xF0 & buff[6];
-  tenYears >>= 4;
-  uint8_t years = 0x0F &buff[6];
 }
 
