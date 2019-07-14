@@ -113,43 +113,11 @@ void readRtc(uint8_t address, uint8_t lenght, uint8_t *buff)
     while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
     buff[i] = I2C_ReceiveData(I2C1);
 
-
     I2C_AcknowledgeConfig(I2C1, ENABLE);
   }
   I2C_AcknowledgeConfig(I2C1, DISABLE);
   I2C_GenerateSTOP(I2C1, ENABLE);
   while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-
-  /*while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data1 = I2C_ReceiveData(I2C1);
-
-  I2C_AcknowledgeConfig(I2C1, ENABLE);
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data2 = I2C_ReceiveData(I2C1);*/
-
-/* DAY OF WEEK */
-/*  I2C_AcknowledgeConfig(I2C1, ENABLE);
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data3 = I2C_ReceiveData(I2C1);
-
-  I2C_AcknowledgeConfig(I2C1, ENABLE);
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data4 = I2C_ReceiveData(I2C1);
-
-  I2C_AcknowledgeConfig(I2C1, ENABLE);
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data5 = I2C_ReceiveData(I2C1);
-
-  I2C_AcknowledgeConfig(I2C1, ENABLE);
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data6 = I2C_ReceiveData(I2C1);
-
-  I2C_AcknowledgeConfig(I2C1, DISABLE);
-  I2C_GenerateSTOP(I2C1, ENABLE);
-  while(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED) != SUCCESS);
-  uint8_t data7 = I2C_ReceiveData(I2C1);
-  //I2C_AcknowledgeConfig(I2C1, ENABLE);
-*/
 
 }
 
