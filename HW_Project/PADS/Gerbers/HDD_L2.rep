@@ -13,11 +13,11 @@ Position  Width  Hgt/ID  Shape    Qty
    17      0.254       0    RND      76
    20      0.5       0    RND     723
    21      0.15       0    RND    2550
-   22      0.75       0    RND      42
-   23        1       0    RND     283
+   22      0.75       0    RND      41
+   23        1       0    RND     288
    24      0.25       0    RND     148
-   25      0.2       0    RND    8518
-   26      0.4       0    RND     304
+   25      0.2       0    RND    8822
+   26      0.4       0    RND     325
    27      0.35       0    RND      32
    28      0.3       0    RND     126
    29      0.8       0    RND      41
