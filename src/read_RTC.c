@@ -112,8 +112,8 @@ void readRtc(void)
 
   /* HOURS */
 
-  printf("DATA2 RAW %d\r\n", data2);
-
+  printf("DATA2 RAW %x\r\n", data2);
+  printf("DATA7 RAW %x\r\n", data7);
   uint8_t typeOfClock = 0X40 & data2;
   typeOfClock >>= 3;
 
@@ -127,7 +127,7 @@ void readRtc(void)
   uint8_t tenDays = 0x50 & data4;
   tenDays >>= 4;
   uint8_t days = 0x0F & data4;
-  //printf("Day: %d%d \r\n", tenDays, days);
+  printf("Day: %d \r\n", data3);
 
   /* MONTH */
   uint8_t tenMonths = 0x10 & data5;

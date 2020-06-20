@@ -9,6 +9,7 @@
 */
 
 #include "stdio.h"
+//#include <stdio.h>
 #include "stm32f10x.h"
 
 //dynamic rotated count
@@ -49,6 +50,7 @@ int main(void)
 {
   initUart();
   initI2cForRtc();
+  printf("HDD Clock by Pawsko\r\n");
   readRtc();
 
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);    //start USART
@@ -189,7 +191,7 @@ int main(void)
   TIM_ITConfig(TIM4, TIM_IT_CC1 | TIM_IT_CC2 | TIM_IT_CC3 | TIM_IT_CC4, ENABLE);    //Enable interrupt from Timer 3 from Clock Capture 1, 2, 3, 4
   TIM_Cmd(TIM4, ENABLE);    //Start Timer TIM4
 
-  GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7);
+  GPIO_ResetBits(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_9);
 
   if (SysTick_Config_Mod(SysTick_CLKSource_HCLK_Div8, 8000ul))
   {
