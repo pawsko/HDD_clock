@@ -46,3 +46,9 @@ https://youtube.com/shorts/eFmTAhwEkuo
 V2 with old clock face. 
 
 https://www.youtube.com/watch?v=KfqW7rv5enw
+
+## Titbit ##
+How much do mistakes cost??
+
+<img src="https://github.com/pawsko/HDD_clock/blob/master/Media/mistake.jpg" width="300">
+
