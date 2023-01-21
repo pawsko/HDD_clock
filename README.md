@@ -14,24 +14,24 @@ Why 12? because of dividing.
 
 360 / 12 = 30 degrees per sign. Very nice.
 
-I wasn't shure about shape of controller, so I split electronics to two part. Controller and LED driver. I planed to use evaluation board 
-with FPGA or microcontroller on board and sedign only board with LED, power supply circuits and buttons. 
+I wasn't shure about shape of controller, so I split electronics to two part. Controller and LED driver. I planned to use evaluation board 
+with FPGA or microcontroller on board and design only board with LED, power supply circuits and buttons. 
 FPGA is obvoius for this solution but I have no knowledge and experience in this area.
 ## First version (prototype) ##
 In first attempt I used NUCLEO-F103RB. Cheap and very popular evaluation board with STM32F103 microcontroller. I utylized there all counters. 
-Each digit has own. One additional counter measure one whole revolution. 
+Each digit has own. One additional counter measures one complete revolution.
 There is an interrupt for detect zero position of clock face.
 Brushless motor controller was taken from HDD so it spinup motor only for 10 second and expected signal from magnetic heads (were removed). Additionally once per second reduced speed for a while.
 Despite this it worked. After 10 seconds motor has stopped. Probably disk controller reported error to host (BIOS in PC).
-There was some issue with syncronisation while colons were blinked.
+There was some issue with synchronisation while colons were blinked.
 ## Second version ##
 I integrated two parts of electronics to one board and I added Real Time Clock programmed through UART with backup battery, brushless motor controller,
 button to change mode clock/callendar (last video). I changed soldermask from regular green to black (looks like dark brown).
 ## Opened issues ##
 1. Unfortunatelly motor is noisy.
-2. Contrast is not insufficient during sunlight. LEDs are super bright but clock face builded from FR4 provides low light transmision. Second wersion with black solder mask is much more effectives. But still is not enough.
+2. Contrast is insufficient during sunlight. LEDs are super bright but clock face builded from FR4 provides low light transmision. Second wersion with black solder mask is much more effective, but it's still not enough.
 3. Clock face is unbalanced because of heteregenous material and digits. Reminder: 5400RPM.
-4. Best effect on the dark room (at night) but take a look point one :(
+4. Best effect is in the dark room (at night) but take a look at point one :(
 
 ## Photos ##
 <img src="https://github.com/pawsko/HDD_clock/blob/master/Media/v1_proto.jpg" width="200"><img src="https://github.com/pawsko/HDD_clock/blob/master/Media/v1.9.jpg" width="200"><img src="https://github.com/pawsko/HDD_clock/blob/master/Media/v2%20i%20v3.jpg" width="400">
