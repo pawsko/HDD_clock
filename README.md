@@ -31,7 +31,7 @@ button to change mode clock/callendar (last video). I changed soldermask from re
 1. Unfortunatelly motor is noisy.
 2. Contrast is not insufficient during sunlight. LEDs are super bright but clock face builded from FR4 provides low light transmision. Second wersion with black solder mask is much more effectives. But still is not enough.
 3. Clock face is unbalanced because of heteregenous material and digits. Reminder: 5400RPM.
-4. Best effect on the dark room (at night) buttake a look above :(
+4. Best effect on the dark room (at night) but take a look point one :(
 
 ## Photos ##
 <img src="https://github.com/pawsko/HDD_clock/blob/master/Media/v1_proto.jpg" width="200"><img src="https://github.com/pawsko/HDD_clock/blob/master/Media/v1.9.jpg" width="200"><img src="https://github.com/pawsko/HDD_clock/blob/master/Media/v2%20i%20v3.jpg" width="400">
